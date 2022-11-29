@@ -1,4 +1,4 @@
-.authorization {
+.authorization-form {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -7,25 +7,35 @@
   height: 450px;
   background-color: white;
   border-radius: 5px;
+
   &__input {
     width: 320px;
     height: 40px;
     border: 2px solid rgba(0, 0, 0, 0.3);
     border-radius: 5px;
     font-weight: 300;
+    margin: 15px;
   }
+
+  &__login {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__password {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__button {
     width: 150px;
     height: 40px;
     background-color: white;
     margin-top: 30px;
-    margin-left: 175px;
+    margin-left: 215px;
     font-weight: 300;
   }
-  &__title {
-    font-size: 36px;
-    font-weight: 300;
-  }
+
   &__input__error {
     width: 320px;
     height: 40px;
@@ -33,10 +43,16 @@
     border-radius: 5px;
     font-weight: 300;
     border-color: red;
+    margin: 15px;
   }
 }
 
-.user-form {
+.registration-link {
+  margin-left: 245px;
+  margin-top: 10px;
+}
+
+.authentication-page {
   &__header {
     display: flex;
     justify-content: flex-start;
@@ -44,51 +60,64 @@
     height: 110px;
     background-color: #c5e9ff;
   }
+
   &__body {
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin-top: 100px;
   }
-  &__title {
-    font-size: 36px;
-    margin-left: 100px;
-    font-weight: 300;
-  }
+
   &__header {
     box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
   }
 }
 
 @media (max-width: 800px) {
-  .authorization {
+  .authorization-form {
     width: 300px;
     height: 350px;
+
     &__input {
       width: 220px;
       height: 30px;
     }
+
     &__input__error {
       width: 220px;
       height: 30px;
     }
+
     &__button {
       width: 100px;
       height: 30px;
+      margin: 0px;
+    }
+
+    &__buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
-  .user-form__image {
+
+  .authentication-page__image {
     width: 300px;
     height: 300px;
+  }
+
+  .registration-link {
+    margin: 10px 0 0 0;
   }
 }
 
 @media (max-width: 650px) {
-  .user-form__body {
+  .authentication-page__body {
     display: flex;
     flex-direction: column;
   }
-  .authorization {
+
+  .authorization-form {
     margin-top: 50px;
   }
 }

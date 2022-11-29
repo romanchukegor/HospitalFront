@@ -1,16 +1,14 @@
 import axios from "axios";
-import { API_URL } from "interceptors/axios";
+import { API_URL } from "constants";
 import AuthService from "services/AuthService";
 
 export default class Store {
   isAuth = false;
-  apiErrorMessage = "";
-  isApiError = false;
-  user = {};
-  channels = {};
+  user = null;
+  events = [];
 
-  setAuth = (bool) => {
-    this.isAuth = bool;
+  setAuth = (boolean) => {
+    this.isAuth = boolean;
     this.publish("isAuth", this.isAuth);
   };
 
@@ -18,22 +16,22 @@ export default class Store {
     this.user = user;
   };
 
-  subscribe(channelName, listener) {
-    if (!this.channels[channelName]) {
-      this.channels[channelName] = [];
+  subscribe = (eventName, listener) => {
+    if (!this.events[eventName]) {
+      this.events[eventName] = [];
     }
 
-    this.channels[channelName].push(listener);
-  }
+    this.events[eventName].push(listener);
+  };
 
-  publish(channelName, data) {
-    const channel = this.channels[channelName];
-    if (!channel || !channel.length) {
+  publish = (eventName, data) => {
+    const event = this.events[eventName];
+    if (!event || !event.length) {
       return;
     }
-    
-    channel.forEach((listener) => listener(data));
-  }
+
+    event.forEach((listener) => listener(data));
+  };
 
   login = async (login, password) => {
     try {
@@ -41,24 +39,21 @@ export default class Store {
       localStorage.setItem("token", response.accessToken);
       this.setAuth(true);
       this.setUser(response.user);
-      return response;
     } catch (error) {
-      return error;
+      return error.message;
     }
   };
 
   registration = async (login, password) => {
     try {
       const response = await AuthService.registration(login, password);
-      console.log(response)
-      if(!response.error) {
-      localStorage.setItem("token", response.accessToken);
-      this.setAuth(true);
-      this.setUser(response.user);
+      if (!response.error) {
+        localStorage.setItem("token", response.accessToken);
+        this.setAuth(true);
+        this.setUser(response.user);
       }
-      return response;
     } catch (error) {
-      return error;
+      return error.message;
     }
   };
 
@@ -68,9 +63,8 @@ export default class Store {
       localStorage.removeItem("token", response.accessToken);
       this.setAuth(false);
       this.setUser({});
-      return response;
     } catch (error) {
-      return error;
+      return error.message;
     }
   };
 
@@ -83,10 +77,9 @@ export default class Store {
         localStorage.removeItem("token", response.accessToken);
         this.setAuth(true);
         this.setUser(response.user);
-        return response;
       }
     } catch (error) {
-      return error;
+      return error.message;
     }
   };
 }

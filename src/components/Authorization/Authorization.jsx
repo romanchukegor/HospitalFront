@@ -1,73 +1,90 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "index";
 import Error from "components/Error/Error";
-import { Context } from "../..";
-import HeaderImage from "components/HeaderImage/HeaderImage";
-import Build from "images/Build.svg";
+import HeaderImage from "components/Header/Header";
+import Helpers from "helpers/helpers";
+import build from "images/Build.svg";
 import "./style.scss";
 
 const Authorization = () => {
-  const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({
+    login: "",
+    password: "",
+  });
+
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const { store } = useContext(Context);
+  const store = useContext(Context);
 
-  const userLogin = async () => {
-    if (login === "" || password === "") {
+  const userSignIn = async () => {
+    if (Helpers.checkLogin(user.login)) {
       setIsError(true);
-      setErrorMessage("Все поля должны быть заполнены");
+      setErrorMessage("Поле для логина должно быть больше 6 символов");
+    } else if (!Helpers.checkPassword(user.password)) {
+      setIsError(true);
+      setErrorMessage("Пароль веден не корректно");
     } else {
-      const response = await store.login(login, password);
+      const error = await store.login(user.login, user.password);
 
-      if (!response.data) {
-        setErrorMessage("Ошибка входа");
+      if (error) {
+        setIsError(true);
+        setErrorMessage(error);
       }
     }
   };
 
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setUser({
+      ...user,
+      [event.target.name]: value,
+    });
+  };
+
   return (
-    <div className="user-form">
-      <div className="user-form__header">
-        <HeaderImage />
-        <div className="user-form__title">Войти в систему</div>
+    <div className="authentication-page">
+      <div className="authentication-page__header">
+        <HeaderImage title={"Войти в систему"} />
       </div>
-      <div className="user-form__body">
+      <div className="authentication-page__body">
         <div>
-          <img src={Build} alt="" className="user-form__image" />
+          <img src={build} alt="" className="authentication-page__image" />
         </div>
-        <div className="authorization">
-          <div className="authorization__title">Войти в систему</div>
-          <div>
-            <p>Логин:</p>
+        <div className="authorization-form">
+          <div className="authorization-form__title">Войти в систему</div>
+          <form className="authorization-form__login">
+            <label>Логин:</label>
             <input
               type="text"
               className={
                 !isError
-                  ? "authorization__input"
-                  : "authorization__input__error"
+                  ? "authorization-form__input"
+                  : "authorization-form__input__error"
               }
               placeholder="Логин"
-              onChange={(e) => setLogin(e.target.value)}
+              name="login"
+              onChange={handleChange}
             />
-          </div>
-          <div>
-            <p>Пароль:</p>
+          </form>
+          <form className="authorization-form__password">
+            <label>Пароль:</label>
             <input
               type="password"
               className={
                 !isError
-                  ? "authorization__input"
-                  : "authorization__input__error"
+                  ? "authorization-form__input"
+                  : "authorization-form__input__error"
               }
               placeholder="Пароль"
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              onChange={handleChange}
             />
-          </div>
-          <div>
+          </form>
+          <div className="authorization-form__buttons">
             <button
-              className="authorization__button"
-              onClick={userLogin}
+              className="authorization-form__button"
+              onClick={userSignIn}
               type="button"
             >
               Войти

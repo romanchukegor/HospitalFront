@@ -1,26 +1,28 @@
-import React, { useContext } from "react";
-import { useState } from "react";
-import { Context } from "../..";
+import { useContext, useState } from "react";
+import { Context } from "index";
 import Error from "components/Error/Error";
 
 const Home = () => {
-  const { store } = useContext(Context);
+  const store = useContext(Context);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const userLogout = async () => {
-    const response = await store.logout();
+    const error = await store.logout();
 
-    if (!response.data) {
+    if (error) {
       setIsError(true);
-      setErrorMessage("Ошибка выхода");
+      setErrorMessage(error);
     }
   };
 
   return (
     <div>
       <button onClick={userLogout}>logout</button>
-      {isError && <Error errorMessage={errorMessage} isError={isError} />}
+      {isError && <Error 
+      errorMessage={errorMessage} 
+      isError={isError} 
+      />}
     </div>
   );
 };

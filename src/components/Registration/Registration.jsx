@@ -1,94 +1,118 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import HeaderImage from "components/HeaderImage/HeaderImage";
-import Build from "images/Build.svg";
+import { Context } from "index";
+import HeaderImage from "components/Header/Header";
+import build from "images/Build.svg";
 import Error from "components/Error/Error";
-import { Context } from "../..";
+import Helpers from "helpers/helpers";
 import "./style.scss";
 
 const Registration = () => {
-  const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
-  const [repeatedPassword, setRepeatedPassword] = useState("");
+  const [user, setUser] = useState({
+    login: "",
+    password: "",
+    confirmPassword: "",
+  });
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const { store } = useContext(Context);
+  const store = useContext(Context);
 
   const userRegistration = async () => {
-    if (login === "" || password === "" || repeatedPassword === "") {
+    if (Helpers.checkLogin(user.login)) {
       setIsError(true);
-      setErrorMessage("Все поля должны быть заполнены");
-
-      if (password !== repeatedPassword) {
-        setIsError(true);
-        setErrorMessage("Пароли не совпадают");
-      }
-
-      if (login.length < 6 || password.length < 6) {
-        setIsError(true);
-        setErrorMessage("Логин и пароль должны быть больше 6 символов");
-      }
+      setErrorMessage("Логин должен быть больше 6 символов");
+    } else if (!Helpers.checkPassword(user.password)) {
+      setIsError(true);
+      setErrorMessage("Пароль введен не корректно");
+    } else if (
+      !Helpers.checkEqualPasswords(user.password, user.confirmPassword)
+    ) {
+      setIsError(true);
+      setErrorMessage("Пароли не совпадают");
     } else {
-      const response = await store.registration(login, password);
+      const error = await store.registration(user.login, user.password);
 
-      if (response.error) {
-        setErrorMessage("Ошибка регистрации");
+      if (error) {
+        setIsError(true);
+        setErrorMessage(error);
       }
     }
   };
 
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setUser({
+      ...user,
+      [event.target.name]: value,
+    });
+  };
+
   return (
-    <div className="user-form">
-      <div className="user-form__header">
-        <HeaderImage />
-        <div className="user-form__title">Зарегистрироваться в системе</div>
+    <div className="authentication-page">
+      <div className="authentication-page__header">
+        <HeaderImage title={"Зарегистрироваться в системе"} />
       </div>
-      <div className="user-form__body">
+      <div className="authentication-page__body">
         <div>
-          <img src={Build} alt="" className="user-form__image"/>
+          <img src={build} alt="" className="authentication-page__image" />
         </div>
-        <div className="registration">
-          <div className="registration__title">
+        <div className="registration-form">
+          <div className="registration-form__title">
             Зарегистрироваться в системе
           </div>
           <div>
             <p>Логин:</p>
             <input
               type="text"
-              className={!isError ? "registration__input" : "registration__input__error"}
+              className={
+                !isError
+                  ? "registration-form__input"
+                  : "registration-form__input__error"
+              }
               placeholder="Логин"
-              onChange={(e) => setLogin(e.target.value)}
+              name="login"
+              onChange={handleChange}
             />
           </div>
           <div>
             <p>Пароль:</p>
             <input
               type="password"
-              className={!isError ? "registration__input" : "registration__input__error"}
+              className={
+                !isError
+                  ? "registration-form__input"
+                  : "registration-form__input__error"
+              }
               placeholder="Пароль"
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              onChange={handleChange}
             />
           </div>
           <div>
             <p>Повторите пароль:</p>
             <input
               type="password"
-              className={!isError ? "registration__input" : "registration__input__error"}
-              placeholder="Пароль"
-              onChange={(e) => setRepeatedPassword(e.target.value)}
+              className={
+                !isError
+                  ? "registration-form__input"
+                  : "registration-form__input__error"
+              }
+              placeholder="Повторите пароль"
+              name="confirm-password"
+              onChange={handleChange}
             />
           </div>
-          <button
-            onClick={userRegistration}
-            className="registration__button"
-            type="button"
-          >
-            Зарегестрироваться
-          </button>
-          <div>
+          <div className="registration-form__buttons">
+            <button
+              onClick={userRegistration}
+              className="registration-form__button"
+              type="button"
+            >
+              Зарегестрироваться
+            </button>
             <Link to="/authorization">
               <button className="authorization-link" type="button">
-                Войти
+                Авторизация
               </button>
             </Link>
           </div>
