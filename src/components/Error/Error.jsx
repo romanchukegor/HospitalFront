@@ -5,7 +5,8 @@ const Error = ({ errorMessage, isError }) => {
     <Snackbar 
       open={isError} 
       autoHideDuration={3000} 
-      message={errorMessage} />
+      message={errorMessage} 
+    />
   );
 };
 

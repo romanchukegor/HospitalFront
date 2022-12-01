@@ -1,9 +1,10 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "src";
+import { regexForPassword } from "src/constants";
 import Error from "src/components/Error/Error";
-import HeaderImage from "src/components/Header/Header";
-import Helpers from "src/helpers/validator";
+import Header from "src/components/Header/Header";
+import Validator from "src/helpers/validator";
 import build from "src/images/build.svg";
 import "./style.scss";
 
@@ -30,12 +31,12 @@ const LogInForm = () => {
   };
 
   const logInUser = async () => {
-    if (!Helpers.checkLogin(user.login)) {
+    if (!Validator.checkStringLength(user.login, 6)) {
       handleError("Поле для логина должно быть больше 6 символов");
       return;
     }
 
-    if (!Helpers.checkPassword(user.password)) {
+    if (!Validator.checkRegex(regexForPassword, user.password)) {
       handleError("Пароль веден не корректно");
       return;
     }
@@ -51,22 +52,27 @@ const LogInForm = () => {
   return (
     <div className="authorization-page">
       <div className="authorization-page__header">
-        <HeaderImage title={"Войти в систему"} />
+        <Header title={"Войти в систему"} />
       </div>
       <div className="authorization-page__body">
         <div>
-          <img src={build} alt="" className="authorization-page__image" />
+          <img 
+            src={build} 
+            alt="" 
+            className="authorization-page__image" />
         </div>
-        <div className="authorization-form">
-          <div className="authorization-form__title">Войти в систему</div>
-          <form className="authorization-form__form">
+        <div className="authorization-page__authorization-form">
+          <div className="authorization-page__authorization-form__title">
+            Войти в систему
+          </div>
+          <form className="authorization-page__authorization-form__submit">
             <label htmlFor="login">Логин:</label>
             <input
               type="text"
               className={
                 !isError
-                  ? "authorization-form__input"
-                  : "authorization-form__input_error"
+                  ? "authorization-page__authorization-form__input"
+                  : "authorization-page__authorization-form__input_error"
               }
               placeholder="Логин"
               name="login"
@@ -80,8 +86,8 @@ const LogInForm = () => {
               type="password"
               className={
                 !isError
-                  ? "authorization-form__input"
-                  : "authorization-form__input_error"
+                  ? "authorization-page__authorization-form__input"
+                  : "authorization-page__authorization-form__input_error"
               }
               placeholder="Пароль"
               name="password"
@@ -90,24 +96,24 @@ const LogInForm = () => {
                 handleChange(event.target.value, event.target.name)
               }
             />
-          </form>
-          <div className="authorization-form__buttons">
-            <button
-              className="authorization-form__button"
-              onClick={logInUser}
-              type="button"
-            >
-              Войти
-            </button>
-            <Link to="/registration">
+            <div className="authorization-page__authorization-form__buttons">
               <button
-                className="authorization-form__registration-link"
+                className="authorization-page__authorization-form__button"
+                onClick={logInUser}
                 type="button"
               >
-                Регистрация
+                Войти
               </button>
-            </Link>
-          </div>
+              <Link to="/registration">
+                <button
+                  className="authorization-page__authorization-form__registration-link"
+                  type="button"
+                >
+                  Регистрация
+                </button>
+              </Link>
+            </div>
+          </form>
         </div>
       </div>
       {isError && <Error errorMessage={errorMessage} isError={isError} />}

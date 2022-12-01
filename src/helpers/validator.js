@@ -1,18 +1,20 @@
 // we use default to export only the class.
 export default class Validator {
   // we use static to store data at the class level.
-  static checkEqualPasswords(password, repeatedPassword) {
-    return repeatedPassword !== password;
+  static checkEquals(string, repeatedString) {
+    return repeatedString === string;
   }
-  static checkLogin(login) {
-    return login.trim().length > 6;
+
+  static checkStringLength(string, number) {
+    return string.trim().length > number;
   }
-  static checkPassword(password) {
-    return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/g.test(
-      password
-    );
+
+  static checkRegex(regex, string) {
+    return regex.test(string);
   }
 }
+
+
 
 
 

@@ -1,7 +1,8 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "src";
-import HeaderImage from "src/components/Header/Header";
+import { regexForPassword } from "src/constants";
+import Header from "src/components/Header/Header";
 import Error from "src/components/Error/Error";
 import Validator from "src/helpers/validator";
 import build from "src/images/build.svg";
@@ -16,13 +17,14 @@ const Registration = () => {
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const store = useContext(Context);
-
+console.log(user.confirmPassword)
   const handleError = (text) => {
     setIsError(true);
     setErrorMessage(text);
   };
 
   const handleChange = (value, name) => {
+    console.log(name)
     setUser({
       ...user,
       [name]: value,
@@ -30,15 +32,17 @@ const Registration = () => {
   };
 
   const registerUser = async () => {
-    if (!Validator.checkLogin(user.login)) {
+    if (!Validator.checkStringLength(user.login, 6)) {
       handleError("Логин должен быть больше 6 символов");
       return;
     }
-    if (!Validator.checkPassword(user.password)) {
+
+    if (!Validator.checkRegex(regexForPassword, user.password)) {
       handleError("Пароль введен не корректно");
       return;
     }
-    if (!Validator.checkEqualPasswords(user.password, user.confirmPassword)) {
+
+    if (!Validator.checkEquals(user.password, user.confirmPassword)) {
       handleError("Пароли не совпадают");
       return;
     }
@@ -47,30 +51,34 @@ const Registration = () => {
 
     if (error) {
       handleError(error);
+      return;
     }
   };
 
   return (
     <div className="registration-page">
       <div className="registration-page__header">
-        <HeaderImage title={"Зарегистрироваться в системе"} />
+        <Header title={"Зарегистрироваться в системе"} />
       </div>
       <div className="registration-page__body">
         <div>
-          <img src={build} alt="" className="registration-page__image" />
+          <img 
+            src={build} 
+            alt="" 
+            className="registration-page__image" />
         </div>
-        <div className="registration-form">
-          <div className="registration-form__title">
+        <div className="registration-page__registration-form">
+          <div className="registration-page__registration-form__title">
             Зарегистрироваться в системе
           </div>
-          <form className="registration-form__form">
+          <form className="registration-page__registration-form__submit">
             <label htmlFor="login">Логин:</label>
             <input
               type="text"
               className={
                 !isError
-                  ? "registration-form__input"
-                  : "registration-form__input_error"
+                  ? "registration-page__registration-form__input"
+                  : "registration-page__registration-form__input_error"
               }
               placeholder="Логин"
               name="login"
@@ -84,8 +92,8 @@ const Registration = () => {
               type="password"
               className={
                 !isError
-                  ? "registration-form__input"
-                  : "registration-form__input_error"
+                  ? "registration-page__registration-form__input"
+                  : "registration-page__registration-form__input_error"
               }
               placeholder="Пароль"
               name="password"
@@ -94,36 +102,36 @@ const Registration = () => {
                 handleChange(event.target.value, event.target.name)
               }
             />
-            <label htmlFor="confirm-password">Повторите пароль:</label>
+            <label htmlFor="confirmPassword">Повторите пароль:</label>
             <input
               type="password"
               className={
                 !isError
-                  ? "registration-form__input"
-                  : "registration-form__input_error"
+                  ? "registration-page__registration-form__input"
+                  : "registration-page__registration-form__input_error"
               }
               placeholder="Повторите пароль"
-              name="confirm-password"
-              id="confirm-password"
+              name="confirmPassword"
+              id="confirmPassword"
               onChange={(event) =>
                 handleChange(event.target.value, event.target.name)
               }
             />
-          </form>
-          <div className="registration-form__buttons">
+            <div className="registration-page__registration-form__buttons">
             <button
               onClick={registerUser}
-              className="registration-form__button"
+              className="registration-page__registration-form__button"
               type="button"
             >
               Зарегестрироваться
             </button>
             <Link to="/authorization">
-              <button className="registration-form__authorization-link" type="button">
+              <button className="registration-page__registration-form__authorization-link" type="button">
                 Авторизация
               </button>
             </Link>
           </div>
+          </form>
         </div>
       </div>
       {isError && <Error errorMessage={errorMessage} isError={isError} />}
