@@ -1,4 +1,4 @@
-import api from "../interceptors/axios";
+import api from "src/http";
 
 export default class AuthService {
   static async login(login, password) {

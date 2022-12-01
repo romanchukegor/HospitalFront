@@ -1,7 +1,7 @@
-import vector from "images/Vector.svg";
+import vector from "src/images/vector.svg";
 import "./style.scss";
 
-const HeaderImage = ({ title }) => {
+const Header = ({ title }) => {
   return (
     <div className="header">
       <img src={vector} alt="" />
@@ -10,4 +10,4 @@ const HeaderImage = ({ title }) => {
   );
 };
 
-export default HeaderImage;
+export default Header;

@@ -2,12 +2,10 @@ import { Snackbar } from "@mui/material";
 
 const Error = ({ errorMessage, isError }) => {
   return (
-    <div>
-      <Snackbar 
+    <Snackbar 
       open={isError} 
       autoHideDuration={3000} 
       message={errorMessage} />
-    </div>
   );
 };
 

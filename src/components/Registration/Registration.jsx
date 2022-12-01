@@ -1,10 +1,10 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Context } from "index";
-import HeaderImage from "components/Header/Header";
-import build from "images/Build.svg";
-import Error from "components/Error/Error";
-import Helpers from "helpers/helpers";
+import { Context } from "src";
+import HeaderImage from "src/components/Header/Header";
+import Error from "src/components/Error/Error";
+import Validator from "src/helpers/validator";
+import build from "src/images/build.svg";
 import "./style.scss";
 
 const Registration = () => {
@@ -17,101 +17,109 @@ const Registration = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const store = useContext(Context);
 
-  const userRegistration = async () => {
-    if (Helpers.checkLogin(user.login)) {
-      setIsError(true);
-      setErrorMessage("Логин должен быть больше 6 символов");
-    } else if (!Helpers.checkPassword(user.password)) {
-      setIsError(true);
-      setErrorMessage("Пароль введен не корректно");
-    } else if (
-      !Helpers.checkEqualPasswords(user.password, user.confirmPassword)
-    ) {
-      setIsError(true);
-      setErrorMessage("Пароли не совпадают");
-    } else {
-      const error = await store.registration(user.login, user.password);
-
-      if (error) {
-        setIsError(true);
-        setErrorMessage(error);
-      }
-    }
+  const handleError = (text) => {
+    setIsError(true);
+    setErrorMessage(text);
   };
 
-  const handleChange = (event) => {
-    const value = event.target.value;
+  const handleChange = (value, name) => {
     setUser({
       ...user,
-      [event.target.name]: value,
+      [name]: value,
     });
   };
 
+  const registerUser = async () => {
+    if (!Validator.checkLogin(user.login)) {
+      handleError("Логин должен быть больше 6 символов");
+      return;
+    }
+    if (!Validator.checkPassword(user.password)) {
+      handleError("Пароль введен не корректно");
+      return;
+    }
+    if (!Validator.checkEqualPasswords(user.password, user.confirmPassword)) {
+      handleError("Пароли не совпадают");
+      return;
+    }
+
+    const error = await store.registration(user.login, user.password);
+
+    if (error) {
+      handleError(error);
+    }
+  };
+
   return (
-    <div className="authentication-page">
-      <div className="authentication-page__header">
+    <div className="registration-page">
+      <div className="registration-page__header">
         <HeaderImage title={"Зарегистрироваться в системе"} />
       </div>
-      <div className="authentication-page__body">
+      <div className="registration-page__body">
         <div>
-          <img src={build} alt="" className="authentication-page__image" />
+          <img src={build} alt="" className="registration-page__image" />
         </div>
         <div className="registration-form">
           <div className="registration-form__title">
             Зарегистрироваться в системе
           </div>
-          <div>
-            <p>Логин:</p>
+          <form className="registration-form__form">
+            <label htmlFor="login">Логин:</label>
             <input
               type="text"
               className={
                 !isError
                   ? "registration-form__input"
-                  : "registration-form__input__error"
+                  : "registration-form__input_error"
               }
               placeholder="Логин"
               name="login"
-              onChange={handleChange}
+              id="login"
+              onChange={(event) =>
+                handleChange(event.target.value, event.target.name)
+              }
             />
-          </div>
-          <div>
-            <p>Пароль:</p>
+            <label htmlFor="password">Пароль:</label>
             <input
               type="password"
               className={
                 !isError
                   ? "registration-form__input"
-                  : "registration-form__input__error"
+                  : "registration-form__input_error"
               }
               placeholder="Пароль"
               name="password"
-              onChange={handleChange}
+              id="password"
+              onChange={(event) =>
+                handleChange(event.target.value, event.target.name)
+              }
             />
-          </div>
-          <div>
-            <p>Повторите пароль:</p>
+            <label htmlFor="confirm-password">Повторите пароль:</label>
             <input
               type="password"
               className={
                 !isError
                   ? "registration-form__input"
-                  : "registration-form__input__error"
+                  : "registration-form__input_error"
               }
               placeholder="Повторите пароль"
               name="confirm-password"
-              onChange={handleChange}
+              id="confirm-password"
+              onChange={(event) =>
+                handleChange(event.target.value, event.target.name)
+              }
             />
-          </div>
+          </form>
           <div className="registration-form__buttons">
             <button
-              onClick={userRegistration}
+              onClick={registerUser}
               className="registration-form__button"
               type="button"
             >
               Зарегестрироваться
             </button>
             <Link to="/authorization">
-              <button className="authorization-link" type="button">
+              <button className="registration-form__authorization-link" type="button">
                 Авторизация
               </button>
             </Link>

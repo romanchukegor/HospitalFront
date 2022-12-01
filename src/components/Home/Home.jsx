@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-import { Context } from "index";
-import Error from "components/Error/Error";
+import { Context } from "src";
+import Error from "src/components/Error/Error";
 
 const Home = () => {
   const store = useContext(Context);
@@ -19,10 +19,9 @@ const Home = () => {
   return (
     <div>
       <button onClick={userLogout}>logout</button>
-      {isError && <Error 
-      errorMessage={errorMessage} 
-      isError={isError} 
-      />}
+      {isError && (
+        <Error errorMessage={errorMessage} isError={isError} />
+      )}
     </div>
   );
 };

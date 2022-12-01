@@ -1,6 +1,6 @@
 import axios from "axios";
-import { API_URL } from "constants";
-import AuthService from "services/AuthService";
+import { API_URL } from "src/constants";
+import AuthService from "src/services/AuthService";
 
 export default class Store {
   isAuth = false;
@@ -40,7 +40,8 @@ export default class Store {
       this.setAuth(true);
       this.setUser(response.user);
     } catch (error) {
-      return error.message;
+      console.log(error.response);
+      return error.response?.data?.message;
     }
   };
 
@@ -53,7 +54,7 @@ export default class Store {
         this.setUser(response.user);
       }
     } catch (error) {
-      return error.message;
+      return error.response?.data?.message;
     }
   };
 
@@ -64,7 +65,7 @@ export default class Store {
       this.setAuth(false);
       this.setUser({});
     } catch (error) {
-      return error.message;
+      return error.response?.data?.message;
     }
   };
 
@@ -77,9 +78,12 @@ export default class Store {
         localStorage.removeItem("token", response.accessToken);
         this.setAuth(true);
         this.setUser(response.user);
+      } else {
+        this.setAuth(false);
+        this.setUser({});
       }
     } catch (error) {
-      return error.message;
+      return error.response?.data?.message;
     }
   };
 }
