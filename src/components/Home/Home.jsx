@@ -19,8 +19,12 @@ const Home = () => {
 
   return (
     <div>
-      <Header title={"Приемы"} logOutUser={logOutUser} />
-      {isError && <Error errorMessage={errorMessage} isError={isError} />}
+      <Header title={"Приемы"}>
+        <button onClick={logOutUser}>Выход</button>
+      </Header>
+      {isError && 
+        <Error errorMessage={errorMessage} isError={isError} />
+      }
     </div>
   );
 };

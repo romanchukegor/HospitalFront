@@ -36,7 +36,7 @@ const LogInForm = () => {
       return;
     }
 
-    if (!Validator.checkRegex(regexForPassword, user.password)) {
+    if (!Validator.checkStringByRegex(regexForPassword, user.password)) {
       handleError("Пароль веден не корректно");
       return;
     }
@@ -50,29 +50,29 @@ const LogInForm = () => {
   };
 
   return (
-    <div className="authorization-page">
-      <div className="authorization-page__header">
+    <div className="login">
+      <div className="login-header">
         <Header title={"Войти в систему"} />
       </div>
-      <div className="authorization-page__body">
+      <div className="login-body">
         <div>
           <img 
             src={build} 
             alt="" 
-            className="authorization-page__image" />
+            className="login-body__image" />
         </div>
-        <div className="authorization-page__authorization-form">
-          <div className="authorization-page__authorization-form__title">
+        <div className="login-body-form">
+          <div className="login-body-form__title">
             Войти в систему
           </div>
-          <form className="authorization-page__authorization-form__submit">
+            <div className="login-body-form-inputs">
             <label htmlFor="login">Логин:</label>
             <input
               type="text"
               className={
                 !isError
-                  ? "authorization-page__authorization-form__input"
-                  : "authorization-page__authorization-form__input_error"
+                  ? "login-body-form-inputs__input"
+                  : "login-body-form-inputs__input_error"
               }
               placeholder="Логин"
               name="login"
@@ -86,8 +86,8 @@ const LogInForm = () => {
               type="password"
               className={
                 !isError
-                  ? "authorization-page__authorization-form__input"
-                  : "authorization-page__authorization-form__input_error"
+                  ? "login-body-form-inputs__input"
+                  : "login-body-form-inputs__input_error"
               }
               placeholder="Пароль"
               name="password"
@@ -96,9 +96,10 @@ const LogInForm = () => {
                 handleChange(event.target.value, event.target.name)
               }
             />
-            <div className="authorization-page__authorization-form__buttons">
+            </div>
+            <div className="login-body-form-buttons">
               <button
-                className="authorization-page__authorization-form__button"
+                className="login-body-form-buttons__button"
                 onClick={logInUser}
                 type="button"
               >
@@ -106,17 +107,18 @@ const LogInForm = () => {
               </button>
               <Link to="/registration">
                 <button
-                  className="authorization-page__authorization-form__registration-link"
+                  className="login-body-form-buttons__registration-link"
                   type="button"
                 >
                   Регистрация
                 </button>
               </Link>
             </div>
-          </form>
         </div>
       </div>
-      {isError && <Error errorMessage={errorMessage} isError={isError} />}
+      {isError &&
+        <Error errorMessage={errorMessage} isError={isError} />
+      }
     </div>
   );
 };

@@ -17,14 +17,12 @@ const Registration = () => {
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const store = useContext(Context);
-console.log(user.confirmPassword)
   const handleError = (text) => {
     setIsError(true);
     setErrorMessage(text);
   };
 
   const handleChange = (value, name) => {
-    console.log(name)
     setUser({
       ...user,
       [name]: value,
@@ -37,12 +35,12 @@ console.log(user.confirmPassword)
       return;
     }
 
-    if (!Validator.checkRegex(regexForPassword, user.password)) {
+    if (!Validator.checkStringByRegex(regexForPassword, user.password)) {
       handleError("Пароль введен не корректно");
       return;
     }
 
-    if (!Validator.checkEquals(user.password, user.confirmPassword)) {
+    if (!Validator.checkStringsEquals(user.password, user.confirmPassword)) {
       handleError("Пароли не совпадают");
       return;
     }
@@ -56,29 +54,29 @@ console.log(user.confirmPassword)
   };
 
   return (
-    <div className="registration-page">
-      <div className="registration-page__header">
+    <div className="registration">
+      <div className="registration-header">
         <Header title={"Зарегистрироваться в системе"} />
       </div>
-      <div className="registration-page__body">
-        <div>
+      <div className="registration-body">
+        <div className="registration-body__image">
           <img 
             src={build} 
             alt="" 
-            className="registration-page__image" />
+            className="registration-body-form__image" />
         </div>
-        <div className="registration-page__registration-form">
-          <div className="registration-page__registration-form__title">
+        <div className="registration-body-form">
+          <div className="registration-body-form__title">
             Зарегистрироваться в системе
           </div>
-          <form className="registration-page__registration-form__submit">
+          <div className="registration-body-form-inputs">
             <label htmlFor="login">Логин:</label>
             <input
               type="text"
               className={
                 !isError
-                  ? "registration-page__registration-form__input"
-                  : "registration-page__registration-form__input_error"
+                  ? "registration-body-form-inputs__input"
+                  : "registration-body-form-inputs__input_error"
               }
               placeholder="Логин"
               name="login"
@@ -92,8 +90,8 @@ console.log(user.confirmPassword)
               type="password"
               className={
                 !isError
-                  ? "registration-page__registration-form__input"
-                  : "registration-page__registration-form__input_error"
+                  ? "registration-body-form-inputs__input"
+                  : "registration-body-form-inputs__input_error"
               }
               placeholder="Пароль"
               name="password"
@@ -107,8 +105,8 @@ console.log(user.confirmPassword)
               type="password"
               className={
                 !isError
-                  ? "registration-page__registration-form__input"
-                  : "registration-page__registration-form__input_error"
+                  ? "registration-body-form-inputs__input"
+                  : "registration-body-form-inputs__input_error"
               }
               placeholder="Повторите пароль"
               name="confirmPassword"
@@ -117,24 +115,26 @@ console.log(user.confirmPassword)
                 handleChange(event.target.value, event.target.name)
               }
             />
-            <div className="registration-page__registration-form__buttons">
+            </div>
+            <div className="registration-body-form-buttons">
             <button
               onClick={registerUser}
-              className="registration-page__registration-form__button"
+              className="registration-body-form-buttons__button"
               type="button"
             >
               Зарегестрироваться
             </button>
             <Link to="/authorization">
-              <button className="registration-page__registration-form__authorization-link" type="button">
+              <button className="registration-body-form-buttons__authorization-link" type="button">
                 Авторизация
               </button>
             </Link>
           </div>
-          </form>
         </div>
       </div>
-      {isError && <Error errorMessage={errorMessage} isError={isError} />}
+      {isError && 
+        <Error errorMessage={errorMessage} isError={isError} />
+      }
     </div>
   );
 };
