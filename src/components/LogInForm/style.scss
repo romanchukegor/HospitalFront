@@ -54,8 +54,7 @@
       margin-bottom: 24px;
     }
 
-    &-buttons {
-      &__button {
+      &-buttons__button {
         width: 150px;
         height: 40px;
         background-color: white;
@@ -64,11 +63,10 @@
         font-weight: 300;
       }
 
-      &__registration-link {
+      &-buttons__registration-link {
         margin-left: 245px;
         margin-top: 10px;
       }
-    }
   }
 }
 
@@ -77,17 +75,15 @@
     width: 300px;
     height: 350px;
 
-    &-inputs {
-      &__input {
+      &-inputs__input {
         width: 220px;
         height: 30px;
       }
 
-      &__input__error {
+      &-inputs__input_error {
         width: 220px;
         height: 30px;
       }
-    }
 
     &-buttons {
       display: flex;
@@ -116,6 +112,7 @@
   .login-body {
     display: flex;
     flex-direction: column;
+
     &-form {
       margin-top: 50px;
     }

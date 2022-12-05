@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "src";
-import { regexForPassword } from "src/constants";
 import Error from "src/components/Error/Error";
 import Header from "src/components/Header/Header";
-import Validator from "src/helpers/validator";
+import { regexForPassword } from "src/constants";
+import {checkStringByRegex, checkStringLength} from "src/helpers/validator";
 import build from "src/images/build.svg";
 import "./style.scss";
 
@@ -31,12 +31,12 @@ const LogInForm = () => {
   };
 
   const logInUser = async () => {
-    if (!Validator.checkStringLength(user.login, 6)) {
+    if (!checkStringLength(user.login, 6)) {
       handleError("Поле для логина должно быть больше 6 символов");
       return;
     }
 
-    if (!Validator.checkStringByRegex(regexForPassword, user.password)) {
+    if (!checkStringByRegex(regexForPassword, user.password)) {
       handleError("Пароль веден не корректно");
       return;
     }
@@ -62,10 +62,8 @@ const LogInForm = () => {
             className="login-body__image" />
         </div>
         <div className="login-body-form">
-          <div className="login-body-form__title">
-            Войти в систему
-          </div>
-            <div className="login-body-form-inputs">
+          <div className="login-body-form__title">Войти в систему</div>
+          <div className="login-body-form-inputs">
             <label htmlFor="login">Логин:</label>
             <input
               type="text"
@@ -96,28 +94,28 @@ const LogInForm = () => {
                 handleChange(event.target.value, event.target.name)
               }
             />
-            </div>
-            <div className="login-body-form-buttons">
+          </div>
+          <div className="login-body-form-buttons">
+            <button
+              className="login-body-form-buttons__button"
+              onClick={logInUser}
+              type="button"
+            >
+              Войти
+            </button>
+            <Link to="/registration">
               <button
-                className="login-body-form-buttons__button"
-                onClick={logInUser}
+                className="login-body-form-buttons__registration-link"
                 type="button"
               >
-                Войти
+                Регистрация
               </button>
-              <Link to="/registration">
-                <button
-                  className="login-body-form-buttons__registration-link"
-                  type="button"
-                >
-                  Регистрация
-                </button>
-              </Link>
-            </div>
+            </Link>
+          </div>
         </div>
       </div>
-      {isError &&
-        <Error errorMessage={errorMessage} isError={isError} />
+      {isError && <Error 
+        errorMessage={errorMessage} isError={isError} />
       }
     </div>
   );

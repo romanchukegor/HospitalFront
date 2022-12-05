@@ -20,7 +20,7 @@ const Home = () => {
   return (
     <div>
       <Header title={"Приемы"}>
-        <button onClick={logOutUser}>Выход</button>
+        <button onClick={logOutUser} type="button">Выход</button>
       </Header>
       {isError && 
         <Error errorMessage={errorMessage} isError={isError} />

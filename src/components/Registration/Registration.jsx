@@ -1,10 +1,10 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "src";
-import { regexForPassword } from "src/constants";
 import Header from "src/components/Header/Header";
 import Error from "src/components/Error/Error";
-import Validator from "src/helpers/validator";
+import { regexForPassword } from "src/constants";
+import {checkStringByRegex, checkStringLength, checkStringsEquals} from "src/helpers/validator";
 import build from "src/images/build.svg";
 import "./style.scss";
 
@@ -17,6 +17,7 @@ const Registration = () => {
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const store = useContext(Context);
+
   const handleError = (text) => {
     setIsError(true);
     setErrorMessage(text);
@@ -30,17 +31,17 @@ const Registration = () => {
   };
 
   const registerUser = async () => {
-    if (!Validator.checkStringLength(user.login, 6)) {
+    if (!checkStringLength(user.login, 6)) {
       handleError("Логин должен быть больше 6 символов");
       return;
     }
 
-    if (!Validator.checkStringByRegex(regexForPassword, user.password)) {
+    if (!checkStringByRegex(regexForPassword, user.password)) {
       handleError("Пароль введен не корректно");
       return;
     }
 
-    if (!Validator.checkStringsEquals(user.password, user.confirmPassword)) {
+    if (!checkStringsEquals(user.password, user.confirmPassword)) {
       handleError("Пароли не совпадают");
       return;
     }
@@ -115,8 +116,8 @@ const Registration = () => {
                 handleChange(event.target.value, event.target.name)
               }
             />
-            </div>
-            <div className="registration-body-form-buttons">
+          </div>
+          <div className="registration-body-form-buttons">
             <button
               onClick={registerUser}
               className="registration-body-form-buttons__button"
@@ -125,7 +126,10 @@ const Registration = () => {
               Зарегестрироваться
             </button>
             <Link to="/authorization">
-              <button className="registration-body-form-buttons__authorization-link" type="button">
+              <button
+                className="registration-body-form-buttons__authorization-link"
+                type="button"
+              >
                 Авторизация
               </button>
             </Link>
