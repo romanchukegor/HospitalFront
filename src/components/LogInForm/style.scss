@@ -46,6 +46,8 @@
     }
 
     &-buttons {
+      display: flex;
+      flex-direction: column;
 
       &__button {
         width: 150px;
@@ -70,7 +72,6 @@
     height: 350px;
 
     &-inputs {
-      
       &__input {
         width: 220px;
         height: 30px;
