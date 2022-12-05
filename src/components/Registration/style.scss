@@ -1,12 +1,3 @@
-.registration-header {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 110px;
-  background-color: #c5e9ff;
-  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
 .registration-body {
   display: flex;
   justify-content: space-around;
@@ -91,6 +82,7 @@
     }
 
     &-inputs {
+      
       &__input {
         width: 220px;
         height: 30px;
@@ -103,6 +95,7 @@
     }
 
     &-buttons {
+
       display: flex;
       flex-direction: column;
       align-items: center;

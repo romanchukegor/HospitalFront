@@ -1,12 +1,3 @@
-.login-header {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 110px;
-  background-color: #c5e9ff;
-  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
 .login-body {
   display: flex;
   justify-content: space-around;
@@ -54,7 +45,9 @@
       margin-bottom: 24px;
     }
 
-      &-buttons__button {
+    &-buttons {
+
+      &__button {
         width: 150px;
         height: 40px;
         background-color: white;
@@ -63,10 +56,11 @@
         font-weight: 300;
       }
 
-      &-buttons__registration-link {
+      &__registration-link {
         margin-left: 245px;
         margin-top: 10px;
       }
+    }
   }
 }
 
@@ -75,15 +69,18 @@
     width: 300px;
     height: 350px;
 
-      &-inputs__input {
+    &-inputs {
+      
+      &__input {
         width: 220px;
         height: 30px;
       }
 
-      &-inputs__input_error {
+      &__input_error {
         width: 220px;
         height: 30px;
       }
+    }
 
     &-buttons {
       display: flex;

@@ -1,7 +1,9 @@
 .header {
   display: flex;
-  justify-content: space-between;
-  margin-left: 50px;
+  align-items: center;
+  height: 110px;
+  background-color: #c5e9ff;
+  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
   
   &__title {
     margin-left: 50px;
@@ -12,6 +14,7 @@
   &-box {
     display: flex;
     font-size: 24px;
+    margin-left: 50px;
 
     &__title {
       margin-left: 35px;
