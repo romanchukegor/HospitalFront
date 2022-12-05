@@ -4,7 +4,7 @@ import { Context } from "src";
 import Header from "src/components/Header/Header";
 import Error from "src/components/Error/Error";
 import { regexForPassword } from "src/constants";
-import {checkStringByRegex, checkStringLength, checkStringsEquals} from "src/helpers/validator";
+import { checkStringByRegex, checkStringLength, checkStringsEquals } from "src/helpers/validator";
 import build from "src/images/build.svg";
 import "./style.scss";
 
