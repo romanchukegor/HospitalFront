@@ -103,11 +103,8 @@ const LogInForm = () => {
             >
               Войти
             </button>
-            <Link to="/registration">
-              <button
-                className="login-body-form-buttons__registration-link"
-                type="button"
-              >
+            <Link to="/registration" className="login-body-form-buttons__registration-link">
+              <button type="button">
                 Регистрация
               </button>
             </Link>

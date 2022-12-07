@@ -9,28 +9,28 @@ export default class Store {
 
   setAuth = (boolean) => {
     this.isAuth = boolean;
-    this.publish("isAuth", this.isAuth);
+    this.publish(this.isAuth);
   };
 
   setUser = (user) => {
     this.user = user;
   };
 
-  subscribe = (eventName, listener) => {
-    if (!this.events[eventName]) {
-      this.events[eventName] = [];
+  subscribe = (listener) => {
+    if (!this.events) {
+      this.events = [];
     }
 
-    this.events[eventName].push(listener);
+    this.events.push(listener);
   };
 
-  publish = (eventName, data) => {
-    const event = this.events[eventName];
-    if (!event || !event.length) {
+  publish = (data) => {
+    const events = this.events;
+    if (!events || !events.length) {
       return;
     }
 
-    event.forEach((listener) => listener(data));
+    events.forEach((listener) => listener(data));
   };
 
   login = async (login, password) => {

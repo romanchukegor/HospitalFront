@@ -125,11 +125,8 @@ const RegistrationForm = () => {
             >
               Зарегистрироваться
             </button>
-            <Link to="/authorization">
-              <button
-                className="registration-body-form-buttons__authorization-link"
-                type="button"
-              >
+            <Link to="/authorization" className="registration-body-form-buttons__authorization-link">
+              <button type="button">
                 Авторизация
               </button>
             </Link>

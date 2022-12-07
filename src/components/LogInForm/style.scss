@@ -50,6 +50,7 @@
       flex-direction: column;
 
       &__button {
+        cursor: pointer;
         width: 150px;
         height: 40px;
         background-color: white;
@@ -59,7 +60,9 @@
       }
 
       &__registration-link {
+        cursor: pointer;
         margin-left: 245px;
+        width: 100px;
         margin-top: 10px;
       }
     }
