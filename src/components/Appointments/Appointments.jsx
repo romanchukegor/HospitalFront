@@ -1,4 +1,5 @@
 import Appointment from "src/components/Appointment/Appointment";
+import { list } from "src/constants";
 import "./style.scss";
 
 const Appointments = ({ appointments }) => {
@@ -6,16 +7,17 @@ const Appointments = ({ appointments }) => {
     <table className="table">
       <thead className="table-header">
         <tr className="table-header-appointments">
-          <th className="table-header-appointments__column">Имя</th>
-          <th className="table-header-appointments__column">Врач</th>
-          <th className="table-header-appointments__column">Дата</th>
-          <th className="table-header-appointments__column">Жалобы</th>
+          {list.map((element) => (
+            <th key={element.id} className="table-header-appointments__column">
+              {element}
+            </th>
+          ))}
           <th className="table-header-appointments__empty"></th>
-        </tr >
+        </tr>
       </thead>
-      {appointments.map((appointment) => {
-        return <Appointment appointment={appointment} />;
-      })}
+      {appointments.map((appointment) => (
+        <Appointment key={appointment.id} appointment={appointment} />
+      ))}
     </table>
   );
 };

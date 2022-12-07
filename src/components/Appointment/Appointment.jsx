@@ -1,7 +1,7 @@
-import "./style.scss";
-import deleteButton from "../../images/delete.svg";
 import moment from "moment";
-import editButton from "../../images/edit.svg";
+import deleteButton from "src/images/delete.svg";
+import editButton from "src/images/edit.svg";
+import "./style.scss";
 
 const Appointment = ({ appointment }) => {
   return (

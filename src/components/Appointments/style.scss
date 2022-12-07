@@ -14,6 +14,7 @@
     &-appointments {
       display: flex;
       justify-content: space-around;
+      margin-top: 10px;
 
       &__column {
         width: 162px;
@@ -27,6 +28,7 @@
         flex-direction: column;
         align-items: center;
       }
+      
       &__empty {
         width: 100px;
       }

@@ -7,14 +7,14 @@ import RegistrationForm from "src/components/RegistrationForm/RegistrationForm";
 
 const App = () => {
   const store = useContext(Context);
-  const [isAuthentication, setIsAuthentication] = useState(store.isAuth);
+  const [isLoggedIn, setIsLoggedIn] = useState(store.isAuth);
 
   useEffect(() => {
-    store.subscribe("isAuth", (isAuth) => setIsAuthentication(isAuth));
+    store.subscribe((isAuth) => setIsLoggedIn(isAuth));
     store.checkAuth();
   }, []);
 
-  if (isAuthentication) {
+  if (isLoggedIn) {
     return (
       <Routes>
         <Route path="/home" element={<Home />} />

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Error from "src/components/Error/Error";
+import { checkAllInputsByLength } from "src/helpers/validator";
 import "./style.scss";
 
 const AppointmentForm = ({ createAppointment }) => {
@@ -16,13 +18,21 @@ const AppointmentForm = ({ createAppointment }) => {
   });
   const [selected, setSelected] = useState(doctors[0].value);
   const [date, setDate] = useState(new Date());
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const addNewAppointment = async () => {
     try {
       const { nameInput, complaintInput } = inputs;
+
+      if (!checkAllInputsByLength(nameInput, selected, complaintInput)) {
+        handleError("Все поля должны быть заполнены");
+        return;
+      }
+
       await createAppointment(nameInput, selected, date, complaintInput);
     } catch (error) {
-      console.log(error);
+      handleError("Ошибка добавления задачи");
     }
   };
 
@@ -34,27 +44,33 @@ const AppointmentForm = ({ createAppointment }) => {
   };
 
   const handleChangeDate = (e) => {
-     setDate(e.target.value);
+    setDate(e.target.value);
+  };
+
+  const handleError = (text) => {
+    setIsError(true);
+    setErrorMessage(text);
   };
 
   return (
     <div className="form">
       <input
         type="text"
-        className="form__input"
+        className={!isError ? "form__input" : "form__input_error"}
         name="nameInput"
         onChange={(event) =>
           handleChange(event.target.name, event.target.value)
         }
       />
       <select
-        className="form__input"
+        className={!isError ? "form__input" : "form__input_error"}
         value={selected}
         onChange={(event) => setSelected(event.target.value)}
       >
         {doctors.map((doctor) => {
           return (
             <option
+              key={doctor.id}
               onChange={(event) =>
                 handleChange(event.target.name, event.target.value)
               }
@@ -66,13 +82,13 @@ const AppointmentForm = ({ createAppointment }) => {
       </select>
       <input
         type="date"
-        className="form__input"
+        className={!isError ? "form__input" : "form__input_error"}
         name="dateInput"
         onChange={handleChangeDate}
       />
       <input
         type="text"
-        className="form__input"
+        className={!isError ? "form__input" : "form__input_error"}
         name="complaintInput"
         onChange={(event) =>
           handleChange(event.target.name, event.target.value)
@@ -85,6 +101,9 @@ const AppointmentForm = ({ createAppointment }) => {
       >
         Добавить
       </button>
+      {isError && <Error 
+        errorMessage={errorMessage} isError={isError} />
+      }
     </div>
   );
 };

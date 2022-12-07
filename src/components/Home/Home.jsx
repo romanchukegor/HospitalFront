@@ -38,11 +38,12 @@ const Home = () => {
         dateInput,
         complaintInput
       );
+
       setAppointments([...appointments, result.data]);
 
       return result.data;
     } catch (err) {
-      console.log(err);
+      handleError("Ошибка добавления приема.")
     }
   };
 
@@ -51,8 +52,13 @@ const Home = () => {
       const result = await store.getAllAppointments();
       setAppointments(result.data);
     } catch (err) {
-      console.log(err);
+      handleError("Ошибка получения приемов.")
     }
+  };
+
+  const handleError = (text) => {
+    setIsError(true);
+    setErrorMessage(text);
   };
 
   return (
@@ -67,7 +73,10 @@ const Home = () => {
       </Header>
       <AppointmentForm createAppointment={createAppointment} />
       <Appointments appointments={appointments} />
-      {isError && <Error errorMessage={errorMessage} isError={isError} />}
+      {isError && <Error 
+        errorMessage={errorMessage} 
+        isError={isError} />
+      }
     </div>
   );
 };

@@ -1,24 +1,33 @@
 .form {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 144px;
-    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
-  
-    &__input {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 144px;
+  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
+
+  &__input {
+    width: 188px;
+    height: 45px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+
+    &_error {
       width: 188px;
       height: 45px;
       background: #ffffff;
       border: 1px solid rgba(0, 0, 0, 0.2);
       border-radius: 4px;
-    }
-  
-    &__button {
-      width: 188px;
-      height: 45px;
-      background: #ffffff;
-      border: 1px solid rgba(0, 0, 0, 0.2);
-      border-radius: 4px;
-      cursor: pointer;
+      border-color: red;
     }
   }
+
+  &__button {
+    width: 188px;
+    height: 45px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+}

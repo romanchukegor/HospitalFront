@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { Context } from "src";
 import Error from "src/components/Error/Error";
 import Header from "src/components/Header/Header";
+import { Context } from "src";
 import { regexForPassword } from "src/constants";
 import { checkStringByRegex, checkStringLength } from "src/helpers/validator";
 import build from "src/images/build.svg";
@@ -103,11 +103,8 @@ const LogInForm = () => {
             >
               Войти
             </button>
-            <Link to="/registration">
-              <button
-                className="login-body-form-buttons__registration-link"
-                type="button"
-              >
+            <Link to="/registration" className="login-body-form-buttons__registration-link">
+              <button type="button">
                 Регистрация
               </button>
             </Link>
