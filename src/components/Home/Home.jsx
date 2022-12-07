@@ -2,13 +2,9 @@ import { useState, useContext, useEffect } from "react";
 import { Context } from "src";
 import Header from "src/components/Header/Header";
 import Error from "src/components/Error/Error";
-import {
-  addAppointmentService,
-  getAllAppointmentsService,
-} from "src/appointmentService";
+import AppointmentForm from "src/components/AppointmentForm/AppointmentForm";
+import Appointments from "src/components/Appointments/Appointments";
 import "./style.scss";
-import AppointmentForm from "../AppointmentForm/AppointmentForm";
-import Appointment from "../Appointment/Appointment";
 
 const Home = () => {
   const store = useContext(Context);
@@ -29,60 +25,48 @@ const Home = () => {
     }
   };
 
-  const addAppointment = async (
+  const createAppointment = async (
     nameInput,
     selected,
     dateInput,
     complaintInput
   ) => {
-    console.log(nameInput, selected, dateInput, complaintInput);
     try {
-      const res = await addAppointmentService(
+      const result = await store.addAppointment(
         nameInput,
         selected,
         dateInput,
         complaintInput
       );
+      setAppointments([...appointments, result.data]);
 
-      setAppointments([...appointments, res.data]);
-
-      return res.data;
+      return result.data;
     } catch (err) {
-      setIsError({
-        error: true,
-        errorText: "Не удалось добавить задачу",
-      });
+      console.log(err);
     }
   };
 
   const getAllAppointments = async () => {
     try {
-      const res = await getAllAppointmentsService();
-      console.log(res.data)
-      setAppointments(res.data);
+      const result = await store.getAllAppointments();
+      setAppointments(result.data);
     } catch (err) {
-      setIsError({
-        error: true,
-        errorText: "Не удалось получить задачи",
-      });
+      console.log(err);
     }
   };
 
   return (
     <div className="home">
-      <Header title={"Приемы"}>
-        <button onClick={logOutUser} type="button" className="home__button">
+      <Header title="Приемы">
+        <button 
+          onClick={logOutUser} 
+          type="button" 
+          className="home__button">
           Выход
         </button>
       </Header>
-      <AppointmentForm addAppointment={addAppointment}/>
-      {appointments.map((appointment) => {
-        return (
-          <Appointment
-            appointment={appointment}
-          />
-        );
-      })}
+      <AppointmentForm createAppointment={createAppointment} />
+      <Appointments appointments={appointments} />
       {isError && <Error errorMessage={errorMessage} isError={isError} />}
     </div>
   );

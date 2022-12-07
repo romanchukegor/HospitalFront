@@ -8,7 +8,7 @@ import { checkStringByRegex, checkStringLength, checkStringsEquals } from "src/h
 import build from "src/images/build.svg";
 import "./style.scss";
 
-const Registration = () => {
+const RegistrationForm = () => {
   const [user, setUser] = useState({
     login: "",
     password: "",
@@ -123,7 +123,7 @@ const Registration = () => {
               className="registration-body-form-buttons__button"
               type="button"
             >
-              Зарегестрироваться
+              Зарегистрироваться
             </button>
             <Link to="/authorization">
               <button
@@ -143,4 +143,4 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default RegistrationForm;

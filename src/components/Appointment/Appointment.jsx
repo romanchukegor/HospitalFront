@@ -1,28 +1,36 @@
-import React from "react";
-import "./style.scss"
+import "./style.scss";
+import deleteButton from "../../images/delete.svg";
+import moment from "moment";
+import editButton from "../../images/edit.svg";
 
-const Appointment = ({appointment}) => {
+const Appointment = ({ appointment }) => {
   return (
-    <div>
-      <table className="table">
-        <tbody>
-          <tr className="table-header">
-            <td>Имя</td>
-            <td>Врач</td>
-            <td>Дата</td>
-            <td>Жалобы</td>
-            <td></td>
-          </tr>
-          <tr className="table-appointments">
-            <td>{appointment.name}</td>
-            <td>{appointment.doctor}</td>
-            <td>{appointment.date}</td>
-            <td>{appointment.complaint}</td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <tbody className="table-body">
+      <tr className="table-body-appointments">
+        <td className="table-body-appointments__column">{appointment.name}</td>
+        <td className="table-body-appointments__column">
+          {appointment.doctor}
+        </td>
+        <td className="table-body-appointments__column">
+          {moment(appointment.date).format("DD.MM.YYYY")}
+        </td>
+        <td className="table-body-appointments__column">
+          {appointment.complaint}
+        </td>
+        <td className="table-body-appointments-buttons">
+          <img
+            src={deleteButton}
+            alt=""
+            className="table-body-appointments-buttons__img"
+          />
+          <img
+            src={editButton}
+            alt=""
+            className="table-body-appointments-buttons__img"
+          />
+        </td>
+      </tr>
+    </tbody>
   );
 };
 

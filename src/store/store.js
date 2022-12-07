@@ -1,6 +1,10 @@
 import axios from "axios";
 import { API_URL } from "src/constants";
 import AuthService from "src/services/AuthService";
+import {
+  addAppointmentService,
+  getAllAppointmentsService,
+} from "src/services/AppointmentService";
 
 export default class Store {
   isAuth = false;
@@ -72,13 +76,36 @@ export default class Store {
         const response = await axios.get(`${API_URL}/refresh`, {
           withCredentials: true,
         });
-        localStorage.removeItem("token", response.data.accessToken);
+        localStorage.setItem("token", response.data.accessToken);
         this.setAuth(true);
         this.setUser(response.data.user);
       } else {
         this.setAuth(false);
         this.setUser({});
       }
+    } catch (error) {
+      return error.response?.data?.message;
+    }
+  };
+
+  getAllAppointments = async () => {
+    try {
+      const response = await getAllAppointmentsService();
+      return response;
+    } catch (error) {
+      return error.response?.data?.message;
+    }
+  };
+
+  addAppointment = async (name, doctor, date, complaint) => {
+    try {
+      const response = await addAppointmentService(
+        name,
+        doctor,
+        date,
+        complaint
+      );
+      return response;
     } catch (error) {
       return error.response?.data?.message;
     }

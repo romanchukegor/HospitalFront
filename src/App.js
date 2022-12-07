@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { Context } from ".";
 import LogInForm from "src/components/LogInForm/LogInForm";
 import Home from "src/components/Home/Home";
-import Registration from "src/components/Registration/Registration";
+import RegistrationForm from "src/components/RegistrationForm/RegistrationForm";
 
 const App = () => {
   const store = useContext(Context);
@@ -25,7 +25,7 @@ const App = () => {
 
   return (
       <Routes>
-        <Route path="/registration" element={<Registration />} />
+        <Route path="/registration" element={<RegistrationForm />} />
         <Route path="/authorization" element={<LogInForm />} />
         <Route path="*" element={<Navigate to="/authorization" />} />
       </Routes>

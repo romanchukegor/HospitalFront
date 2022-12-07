@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./style.scss";
 
-const AppointmentForm = ({ addAppointment }) => {
+const AppointmentForm = ({ createAppointment }) => {
   const doctors = [
     { value: "", name: "--Выберите доктора--" },
     { value: "Komarov", name: "А.Е Комаров" },
@@ -12,15 +12,15 @@ const AppointmentForm = ({ addAppointment }) => {
 
   const [inputs, setInputs] = useState({
     nameInput: "",
-    dateInput: "",
     complaintInput: "",
   });
   const [selected, setSelected] = useState(doctors[0].value);
+  const [date, setDate] = useState(new Date());
 
   const addNewAppointment = async () => {
     try {
-      const { nameInput, dateInput, complaintInput } = inputs;
-      await addAppointment(nameInput, selected, dateInput, complaintInput);
+      const { nameInput, complaintInput } = inputs;
+      await createAppointment(nameInput, selected, date, complaintInput);
     } catch (error) {
       console.log(error);
     }
@@ -31,6 +31,10 @@ const AppointmentForm = ({ addAppointment }) => {
       ...inputs,
       [name]: value,
     });
+  };
+
+  const handleChangeDate = (e) => {
+     setDate(e.target.value);
   };
 
   return (
@@ -64,15 +68,21 @@ const AppointmentForm = ({ addAppointment }) => {
         type="date"
         className="form__input"
         name="dateInput"
-        onChange={handleChange}
+        onChange={handleChangeDate}
       />
       <input
         type="text"
         className="form__input"
         name="complaintInput"
-        onChange={handleChange}
+        onChange={(event) =>
+          handleChange(event.target.name, event.target.value)
+        }
       />
-      <button className="form__button" onClick={addNewAppointment}>
+      <button
+        className="form__button"
+        onClick={addNewAppointment}
+        type="button"
+      >
         Добавить
       </button>
     </div>

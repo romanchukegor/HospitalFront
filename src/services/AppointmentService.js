@@ -1,4 +1,4 @@
-import { API_URL } from "./constants";
+import { API_URL } from "../constants";
 import axios from "axios";
 
 export const addAppointmentService = (name, doctor, date, complaint) =>
@@ -9,5 +9,5 @@ export const addAppointmentService = (name, doctor, date, complaint) =>
     complaint,
   });
 
-export const getAllAppointmentsService = (text) =>
+export const getAllAppointmentsService = () =>
   axios.get(`${API_URL}/appointments`);

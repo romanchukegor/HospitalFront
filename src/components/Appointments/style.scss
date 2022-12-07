@@ -1,0 +1,35 @@
+.table {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  border-collapse: collapse;
+
+  &-header {
+    background-color: #c4c4c4;
+    height: 42px;
+    width: 941px;
+    border-bottom: 1px solid black;
+
+    &-appointments {
+      display: flex;
+      justify-content: space-around;
+
+      &__column {
+        width: 162px;
+        font-family: "Roboto";
+        font-style: normal;
+        font-weight: 300;
+        font-size: 18px;
+        line-height: 21px;
+        width: 220px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      &__empty {
+        width: 100px;
+      }
+    }
+  }
+}
