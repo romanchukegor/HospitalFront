@@ -26,6 +26,7 @@ export default class Store {
 
   publish = (data) => {
     const events = this.events;
+    
     if (!events || !events.length) {
       return;
     }

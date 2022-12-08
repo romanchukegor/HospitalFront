@@ -5,7 +5,7 @@ import Error from "src/components/Error/Error";
 import Header from "src/components/Header/Header";
 import { regexForPassword } from "src/constants";
 import { checkStringByRegex, checkStringLength } from "src/helpers/validator";
-import build from "src/images/build.svg";
+import bodyImage from "src/images/bodyImage.svg";
 import "./style.scss";
 
 const LogInForm = () => {
@@ -52,15 +52,14 @@ const LogInForm = () => {
   return (
     <div className="login">
       <div className="login-header">
-        <Header title={"Войти в систему"} />
+        <Header title="Войти в систему"/>
       </div>
       <div className="login-body">
-        <div>
           <img 
-            src={build} 
+            src={bodyImage} 
             alt="" 
-            className="login-body__image" />
-        </div>
+            className="login-body__image" 
+          />
         <div className="login-body-form">
           <div className="login-body-form__title">Войти в систему</div>
           <div className="login-body-form-inputs">

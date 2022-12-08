@@ -5,7 +5,7 @@ import Header from "src/components/Header/Header";
 import Error from "src/components/Error/Error";
 import { regexForPassword } from "src/constants";
 import { checkStringByRegex, checkStringLength, checkStringsEquals } from "src/helpers/validator";
-import build from "src/images/build.svg";
+import bodyImage from "src/images/bodyImage.svg";
 import "./style.scss";
 
 const RegistrationForm = () => {
@@ -57,12 +57,12 @@ const RegistrationForm = () => {
   return (
     <div className="registration">
       <div className="registration-header">
-        <Header title={"Зарегистрироваться в системе"} />
+        <Header title="Зарегистрироваться в системе"/>
       </div>
       <div className="registration-body">
         <div className="registration-body__image">
           <img 
-            src={build} 
+            src={bodyImage} 
             alt="" 
             className="registration-body-form__image" />
         </div>

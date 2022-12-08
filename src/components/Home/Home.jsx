@@ -24,7 +24,7 @@ const Home = () => {
         <button 
           onClick={logOutUser} 
           type="button" 
-          className="home__button">
+          className="header__button">
           Выход
         </button>
       </Header>
