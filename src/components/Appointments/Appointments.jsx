@@ -8,7 +8,7 @@ const Appointments = ({ appointments }) => {
       <thead className="table-header">
         <tr className="table-header-appointments">
           {list.map((element) => (
-            <th key={element.id} className="table-header-appointments__column">
+            <th key={element} className="table-header-appointments__column">
               {element}
             </th>
           ))}
@@ -16,7 +16,7 @@ const Appointments = ({ appointments }) => {
         </tr>
       </thead>
       {appointments.map((appointment) => (
-        <Appointment key={appointment.id} appointment={appointment} />
+        <Appointment key={appointment._id} appointment={appointment} />
       ))}
     </table>
   );

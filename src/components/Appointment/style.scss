@@ -21,11 +21,41 @@
       justify-content: center;
       width: 100px;
       border: 1px solid black;
-      
+
       &__img {
         margin: 10px;
         cursor: pointer;
       }
     }
+  }
+}
+
+@media(max-width: 940px) {
+  .table-body {
+    width: 741px;
+  }
+}
+
+@media(max-width: 740px) {
+  .table-body {
+    width: 641px;
+  }
+}
+
+@media(max-width: 640px) {
+  .table-body {
+    width: 541px;
+  }
+  .table-body-appointments__column {
+    padding: 0;
+  }
+}
+
+@media(max-width: 540px) {
+  .table-body {
+    width: 440px;
+  }
+  .table-body-appointments__column {
+    font-size: 14px;
   }
 }

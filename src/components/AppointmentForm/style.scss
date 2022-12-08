@@ -28,6 +28,31 @@
     background: #ffffff;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 4px;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 21px;
     cursor: pointer;
+  }
+}
+
+@media (max-width: 940px) {
+  .form__input {
+    width: 144px;
+  }
+
+  .form__input_error {
+    width: 144px;
+  }
+}
+
+@media (max-width: 740px) {
+  .form__input {
+    width: 94px;
+  }
+
+  .form__input_error {
+    width: 94px;
   }
 }

@@ -5,13 +5,13 @@
   height: 110px;
   background-color: #c5e9ff;
   box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
-  
+
   &__title {
     margin-left: 50px;
     font-size: 36px;
     font-weight: 300;
   }
-  
+
   &-box {
     display: flex;
     font-size: 24px;
@@ -19,6 +19,11 @@
 
     &__title {
       margin-left: 35px;
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 300;
+      font-size: 36px;
+      line-height: 42px;
     }
   }
 }
@@ -34,4 +39,3 @@
     font-size: 20px;
   }
 }
-

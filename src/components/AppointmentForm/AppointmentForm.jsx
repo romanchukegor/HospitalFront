@@ -70,7 +70,7 @@ const AppointmentForm = ({ createAppointment }) => {
         {doctors.map((doctor) => {
           return (
             <option
-              key={doctor.id}
+              key={doctor.value}
               onChange={(event) =>
                 handleChange(event.target.name, event.target.value)
               }
