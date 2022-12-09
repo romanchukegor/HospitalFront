@@ -4,7 +4,7 @@ import { createContext } from "react";
 import { BrowserRouter } from "react-router-dom";
 import Store from "./store/store";
 import App from "./App";
-import "./index.css";
+import "./index.scss";
 
 const store = new Store();
 

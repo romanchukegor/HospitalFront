@@ -1,0 +1,14 @@
+@import "../public/fonts/fonts.scss";
+
+body {
+  margin: 0;
+  font-family: "Roboto";
+  background-color: rgba(197, 233, 255, 0.72);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}

@@ -1,6 +1,6 @@
 import axios from "axios";
-import { API_URL } from "src/constants";
 import AuthService from "src/services/AuthService";
+import { API_URL } from "src/constants";
 import {
   addAppointmentService,
   getAllAppointmentsService,
@@ -30,6 +30,7 @@ export default class Store {
 
   publish = (data) => {
     const events = this.events;
+
     if (!events || !events.length) {
       return;
     }
@@ -97,14 +98,9 @@ export default class Store {
     }
   };
 
-  addAppointment = async (name, doctor, date, complaint) => {
+  addAppointment = async (form) => {
     try {
-      const response = await addAppointmentService(
-        name,
-        doctor,
-        date,
-        complaint
-      );
+      const response = await addAppointmentService(form);
       return response;
     } catch (error) {
       return error.response?.data?.message;

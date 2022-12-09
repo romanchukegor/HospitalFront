@@ -1,11 +1,19 @@
 import { Snackbar } from "@mui/material";
 
-const Error = ({ errorMessage, isError }) => {
+const Error = ({ errorMessage, isError, setIsError }) => {
+  const handleClose = (reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setIsError(false);
+  };
   return (
-    <Snackbar 
-      open={isError} 
-      autoHideDuration={3000} 
-      message={errorMessage} 
+    <Snackbar
+      open={isError}
+      autoHideDuration={6000}
+      onClose={handleClose}
+      message={errorMessage}
     />
   );
 };

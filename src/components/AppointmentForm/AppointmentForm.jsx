@@ -1,99 +1,100 @@
 import { useState } from "react";
-import Error from "src/components/Error/Error";
-import { checkAllInputsByLength } from "src/helpers/validator";
+import { doctors } from "src/constants";
 import "./style.scss";
 
-const AppointmentForm = ({ createAppointment }) => {
-  const doctors = [
-    { value: "", name: "--Выберите доктора--" },
-    { value: "Komarov", name: "А.Е Комаров" },
-    { value: "Aibolit", name: "И.С Айболит" },
-    { value: "Ivanov", name: "С.Ю Иванов" },
-    { value: "Petrov", name: "И.И Петров" },
-  ];
-
-  const [inputs, setInputs] = useState({
-    nameInput: "",
-    complaintInput: "",
+const AppointmentForm = ({ createAppointment, isError }) => {
+  const [form, setForm] = useState({
+    name: "",
+    doctor: doctors[0].value,
+    date: "",
+    complaint: "",
   });
-  const [selected, setSelected] = useState(doctors[0].value);
-  const [date, setDate] = useState(new Date());
-  const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
   const addNewAppointment = async () => {
-    try {
-      const { nameInput, complaintInput } = inputs;
-
-      if (!checkAllInputsByLength(nameInput, selected, complaintInput)) {
-        handleError("Все поля должны быть заполнены");
-        return;
-      }
-
-      await createAppointment(nameInput, selected, date, complaintInput);
-    } catch (error) {
-      handleError("Ошибка добавления задачи");
+    const response = await createAppointment(form);
+    if (response) {
+      setForm({
+        ...form,
+        name: "",
+        doctor: "",
+        date: "",
+        complaint: "",
+      });
     }
   };
 
   const handleChange = (name, value) => {
-    setInputs({
-      ...inputs,
+    setForm({
+      ...form,
       [name]: value,
     });
   };
 
-  const handleChangeDate = (e) => {
-    setDate(e.target.value);
-  };
-
-  const handleError = (text) => {
-    setIsError(true);
-    setErrorMessage(text);
-  };
-
   return (
     <div className="form">
-      <input
-        type="text"
-        className={!isError ? "form__input" : "form__input_error"}
-        name="nameInput"
-        onChange={(event) =>
-          handleChange(event.target.name, event.target.value)
-        }
-      />
-      <select
-        className={!isError ? "form__input" : "form__input_error"}
-        value={selected}
-        onChange={(event) => setSelected(event.target.value)}
-      >
-        {doctors.map((doctor) => {
-          return (
+      <div className="form-box">
+        <label htmlFor="name">Имя:</label>
+        <input
+          type="text"
+          id="name"
+          className={!isError ? "form-box__input" : "form-box__input_error"}
+          value={form.name}
+          name="name"
+          onChange={(event) =>
+            handleChange(event.target.name, event.target.value)
+          }
+        />
+      </div>
+      <div className="form-box">
+        <label htmlFor="doctor">Врач:</label>
+        <select
+          className={!isError ? "form-box__input" : "form-box__input_error"}
+          id="doctor"
+          value={form.doctor}
+          onChange={(event) =>
+            handleChange(event.target.name, event.target.value)
+          }
+          name="doctor"
+          placeholder="выбери"
+        >
+          {doctors.map((doctor) => (
             <option
-              key={doctor.value}
+              key={doctor.name}
               onChange={(event) =>
                 handleChange(event.target.name, event.target.value)
               }
             >
               {doctor.name}
             </option>
-          );
-        })}
-      </select>
-      <input
-        type="date"
-        className={!isError ? "form__input" : "form__input_error"}
-        name="dateInput"
-        onChange={handleChangeDate}
-      />
-      <input
-        type="text"
-        className={!isError ? "form__input" : "form__input_error"}
-        name="complaintInput"
-        onChange={(event) =>
-          handleChange(event.target.name, event.target.value)
-        }
-      />
+          ))}
+        </select>
+      </div>
+      <div className="form-box">
+        <label htmlFor="date">Дата:</label>
+        <input
+          type="date"
+          id="date"
+          value={form.date}
+          className={!isError ? "form-box__input" : "form-box__input_error"}
+          name="date"
+          onChange={(event) =>
+            handleChange(event.target.name, event.target.value)
+          }
+        />
+      </div>
+      <div className="form-box">
+        <label htmlFor="complaint">Жалобы:</label>
+        <input
+          type="text"
+          id="complaint"
+          className={!isError ? "form-box__input" : "form-box__input_error"}
+          value={form.complaint}
+          name="complaint"
+          onChange={(event) =>
+            handleChange(event.target.name, event.target.value)
+          }
+        />
+      </div>
       <button
         className="form__button"
         onClick={addNewAppointment}
@@ -101,9 +102,6 @@ const AppointmentForm = ({ createAppointment }) => {
       >
         Добавить
       </button>
-      {isError && <Error 
-        errorMessage={errorMessage} isError={isError} />
-      }
     </div>
   );
 };

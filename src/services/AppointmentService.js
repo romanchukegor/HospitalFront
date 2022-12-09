@@ -1,13 +1,12 @@
 import { API_URL } from "../constants";
-import axios from "axios";
+import $api from "src/http";
 
-export const addAppointmentService = (name, doctor, date, complaint) =>
-  axios.post(`${API_URL}/appointments`, {
-    name,
-    doctor,
-    date,
-    complaint,
+export const addAppointmentService = (form) => {
+  return $api.post(`${API_URL}/appointments`, {
+    ...form,
   });
+};
 
-export const getAllAppointmentsService = () =>
-  axios.get(`${API_URL}/appointments`);
+export const getAllAppointmentsService = () => {
+  return $api.get(`${API_URL}/appointments`);
+};

@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const checkStringsEquals = (string, repeatedString) => {
   return repeatedString === string;
 };
@@ -10,9 +12,10 @@ export const checkStringByRegex = (regex, string) => {
   return regex.test(string);
 };
 
-export const checkAllInputsByLength = (...strings) => {
-  const result = strings.map((element) => {
-    return element !== "";
-  });
-  return result.every((bool) => bool === true);
+export const checkInputByEmptiness = (string) => {
+  return string !== "";
+};
+
+export const getData = (date, format) => {
+  return moment(date).format(format);
 };

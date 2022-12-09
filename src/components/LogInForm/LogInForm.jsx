@@ -56,10 +56,7 @@ const LogInForm = () => {
       </div>
       <div className="login-body">
         <div>
-          <img 
-            src={build} 
-            alt="" 
-            className="login-body__image" />
+          <img src={build} alt="" className="login-body__image" />
         </div>
         <div className="login-body-form">
           <div className="login-body-form__title">Войти в систему</div>
@@ -103,17 +100,22 @@ const LogInForm = () => {
             >
               Войти
             </button>
-            <Link to="/registration" className="login-body-form-buttons__registration-link">
-              <button type="button">
-                Регистрация
-              </button>
+            <Link
+              to="/registration"
+              className="login-body-form-buttons__registration-link"
+            >
+              <button type="button">Регистрация</button>
             </Link>
           </div>
         </div>
       </div>
-      {isError && <Error 
-        errorMessage={errorMessage} isError={isError} />
-      }
+      {isError && (
+        <Error
+          errorMessage={errorMessage}
+          isError={isError}
+          setIsError={setIsError}
+        />
+      )}
     </div>
   );
 };
