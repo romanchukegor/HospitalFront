@@ -24,14 +24,17 @@ const Home = () => {
         <button 
           onClick={logOutUser} 
           type="button" 
-          className="header__button">
+          className="header__button"
+        >
           Выход
         </button>
       </Header>
       <div className="home-inputs">
         <button type="button">Добавить</button>
       </div>
-      {isError && <Error errorMessage={errorMessage} isError={isError} />}
+      {isError && 
+        <Error errorMessage={errorMessage} isError={isError} />
+      }
     </div>
   );
 };

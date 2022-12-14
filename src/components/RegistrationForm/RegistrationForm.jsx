@@ -64,7 +64,8 @@ const RegistrationForm = () => {
           <img 
             src={bodyImage} 
             alt="" 
-            className="registration-body-form__image" />
+            className="registration-body-form__image" 
+          />
         </div>
         <div className="registration-body-form">
           <div className="registration-body-form__title">
