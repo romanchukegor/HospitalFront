@@ -3,7 +3,7 @@ import { Context } from "src";
 import Header from "src/components/Header/Header";
 import Error from "src/components/Error/Error";
 import AppointmentForm from "src/components/AppointmentForm/AppointmentForm";
-import Table from "src/components/Table/Table";
+import AppointmentTable from "src/components/AppointmentTable/AppointmentTable";
 import { checkInputByEmptiness } from "src/helpers/validator";
 import "./style.scss";
 import DeleteModal from "../DeleteModal/DeleteModal";
@@ -18,14 +18,12 @@ const Home = () => {
   const [isActiveEditModal, setIsActiveEditModal] = useState(false);
   const [currentAppointment, setCurrentAppointment] = useState(null);
 
-  console.log(currentAppointment);
-
   useEffect(() => {
     getAllAppointments();
   }, []);
 
   const logOutUser = async () => {
-    const error = await store.logout();
+    const error = await store.userLogout();
 
     if (error) {
       setIsError(true);
@@ -34,8 +32,8 @@ const Home = () => {
     }
   };
 
-  const createAppointment = async (form) => {
-    const { name, complaint, date, doctor } = form;
+  const createAppointment = async (appointmentForm) => {
+    const { name, complaint, date, doctor } = appointmentForm;
 
     if (!checkInputByEmptiness(name)) {
       handleError("Имя должно быть заполнено");
@@ -57,7 +55,7 @@ const Home = () => {
       return;
     }
 
-    const result = await store.addAppointment(form);
+    const result = await store.addAppointment(appointmentForm);
 
     if (!result) {
       handleError("Ошибка добавления приема");
@@ -71,6 +69,7 @@ const Home = () => {
 
   const getAllAppointments = async () => {
     const result = await store.getAllAppointments();
+
     if (!result) {
       handleError("Ошибка получения приемов");
       return;
@@ -91,11 +90,12 @@ const Home = () => {
     setIsActiveDeleteModal(false);
   };
 
-  const editAppointment = async (_id, form) => {
-    const result = await store.editAppointment(_id, form);
+  const editAppointment = async (_id, editForm) => {
+
+    const result = await store.editAppointment(_id, editForm);
 
     if (!result) {
-      handleError("Ошибка получения приемов");
+      handleError("Ошибка обновления приема");
       return;
     }
 
@@ -106,6 +106,8 @@ const Home = () => {
         appointment.date = result.data.date;
         appointment.complaint = result.data.complaint;
       }
+
+      setIsActiveEditModal(false);
 
       return appointment;
     });
@@ -138,7 +140,7 @@ const Home = () => {
         createAppointment={createAppointment}
         isError={isError}
       />
-      <Table
+      <AppointmentTable
         appointments={appointments}
         selectDelete={selectDelete}
         selectEdit={selectEdit}

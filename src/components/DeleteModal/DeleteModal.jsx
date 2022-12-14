@@ -7,7 +7,6 @@ const DeleteModal = ({
   title,
   titleForDeleteButtonChange,
 }) => {
-  console.log(titleForDeleteButtonChange);
   return (
     <Modal
       modifyAppointment={deleteAppointment}

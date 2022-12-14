@@ -1,12 +1,12 @@
 import axios from "axios";
-import AuthService from "src/services/AuthService";
-import { API_URL } from "src/constants";
+import {logIn, registration, logout} from "src/services/AuthService";
 import {
   addAppointmentService,
   getAllAppointmentsService,
   deleteAppointmentService,
   editAppointmentService
 } from "src/services/AppointmentService";
+import { API_URL } from "src/constants";
 
 export default class Store {
   isAuth = false;
@@ -40,9 +40,9 @@ export default class Store {
     events.forEach((listener) => listener(data));
   };
 
-  login = async (login, password) => {
+  userLogin = async (login, password) => {
     try {
-      const response = await AuthService.login(login, password);
+      const response = await logIn(login, password);
       localStorage.setItem("token", response.data.accessToken);
       this.setAuth(true);
       this.setUser(response.data.user);
@@ -51,9 +51,9 @@ export default class Store {
     }
   };
 
-  registration = async (login, password) => {
+  userRegistration = async (login, password) => {
     try {
-      const response = await AuthService.registration(login, password);
+      const response = await registration(login, password);
       localStorage.setItem("token", response.data.accessToken);
       this.setAuth(true);
       this.setUser(response.data.user);
@@ -62,9 +62,9 @@ export default class Store {
     }
   };
 
-  logout = async () => {
+  userLogout = async () => {
     try {
-      const response = await AuthService.logout();
+      const response = await logout();
       localStorage.removeItem("token", response.data.accessToken);
       this.setAuth(false);
       this.setUser({});
@@ -100,9 +100,9 @@ export default class Store {
     }
   };
 
-  addAppointment = async (form) => {
+  addAppointment = async (appointmentForm) => {
     try {
-      const response = await addAppointmentService(form);
+      const response = await addAppointmentService(appointmentForm);
       return response;
     } catch (error) {
       return error.response?.data?.message;

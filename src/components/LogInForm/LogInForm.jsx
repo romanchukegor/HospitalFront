@@ -41,7 +41,7 @@ const LogInForm = () => {
       return;
     }
 
-    const error = await store.login(user.login, user.password);
+    const error = await store.userLogin(user.login, user.password);
 
     if (error) {
       handleError(error);

@@ -1,10 +1,10 @@
 import { tableHeadlines } from "src/constants";
-import { getData } from "src/helpers/validator";
+import { changeFormatDate } from "src/helpers/validator";
 import deleteButton from "src/images/delete.svg";
 import editButton from "src/images/edit.svg";
 import "./style.scss";
 
-const Table = ({ appointments, selectDelete, selectEdit }) => {
+const AppointmentTable = ({ appointments, selectDelete, selectEdit }) => {
   return (
     <table className="table">
       <thead className="table-header">
@@ -27,7 +27,7 @@ const Table = ({ appointments, selectDelete, selectEdit }) => {
               {appointment.doctor}
             </td>
             <td className="table-body-appointments__column">
-              {getData(appointment.date, "DD/MM/YYYY")}
+              {changeFormatDate(appointment.date, "DD/MM/YYYY")}
             </td>
             <td className="table-body-appointments__column">
               {appointment.complaint}
@@ -35,15 +35,20 @@ const Table = ({ appointments, selectDelete, selectEdit }) => {
             <td className="table-body-appointments-buttons">
               <button
                 className="table-body-appointments-buttons__button"
+                type="button"
                 onClick={() => {
                   selectDelete(true, appointment);
                 }}
               >
                 <img src={deleteButton} alt="" />
               </button>
-              <button className="table-body-appointments-buttons__button" onClick={() => {
-                selectEdit(true, appointment);
-              }}>
+              <button
+                className="table-body-appointments-buttons__button"
+                type="button"
+                onClick={() => {
+                  selectEdit(true, appointment);
+                }}
+              >
                 <img src={editButton} alt="" />
               </button>
             </td>
@@ -54,4 +59,4 @@ const Table = ({ appointments, selectDelete, selectEdit }) => {
   );
 };
 
-export default Table;
+export default AppointmentTable;

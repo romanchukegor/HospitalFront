@@ -1,9 +1,9 @@
-import { API_URL } from "../constants";
+import { API_URL } from "src/constants";
 import $api from "src/http";
 
-export const addAppointmentService = (form) => {
+export const addAppointmentService = (appointmentForm) => {
   return $api.post(`${API_URL}/appointments`, {
-    ...form,
+    ...appointmentForm,
   });
 };
 
