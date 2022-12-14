@@ -46,7 +46,7 @@ const RegistrationForm = () => {
       return;
     }
 
-    const error = await store.registration(user.login, user.password);
+    const error = await store.userRegistration(user.login, user.password);
 
     if (error) {
       handleError(error);

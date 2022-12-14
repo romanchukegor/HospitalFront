@@ -16,6 +16,6 @@ export const checkInputByEmptiness = (string) => {
   return string !== "";
 };
 
-export const getData = (date, format) => {
+export const changeFormatData = (date, format) => {
   return moment(date).format(format);
 };

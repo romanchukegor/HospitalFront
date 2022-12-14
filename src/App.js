@@ -4,7 +4,6 @@ import { Context } from ".";
 import LogInForm from "src/components/LogInForm/LogInForm";
 import Home from "src/components/Home/Home";
 import RegistrationForm from "src/components/RegistrationForm/RegistrationForm";
-// import "../public/fonts/fonts.scss"
 
 const App = () => {
   const store = useContext(Context);

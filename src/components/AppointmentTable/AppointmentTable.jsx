@@ -1,10 +1,10 @@
 import { tableHeadlines } from "src/constants";
-import { getData } from "src/helpers/validator";
+import { changeFormatData } from "src/helpers/validator";
 import deleteButton from "src/images/delete.svg";
 import editButton from "src/images/edit.svg";
 import "./style.scss";
 
-const Table = ({ appointments }) => {
+const AppointmentTable = ({ appointments }) => {
   return (
     <table className="table">
       <thead className="table-header">
@@ -27,7 +27,7 @@ const Table = ({ appointments }) => {
               {appointment.doctor}
             </td>
             <td className="table-body-appointments__column">
-              {getData(appointment.date, "DD/MM/YYYY")}
+              {changeFormatData(appointment.date, "DD/MM/YYYY")}
             </td>
             <td className="table-body-appointments__column">
               {appointment.complaint}
@@ -47,4 +47,4 @@ const Table = ({ appointments }) => {
   );
 };
 
-export default Table;
+export default AppointmentTable;
