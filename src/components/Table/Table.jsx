@@ -4,7 +4,7 @@ import deleteButton from "src/images/delete.svg";
 import editButton from "src/images/edit.svg";
 import "./style.scss";
 
-const Table = ({ appointments }) => {
+const Table = ({ appointments, selectDelete, selectEdit }) => {
   return (
     <table className="table">
       <thead className="table-header">
@@ -33,10 +33,17 @@ const Table = ({ appointments }) => {
               {appointment.complaint}
             </td>
             <td className="table-body-appointments-buttons">
-              <button className="table-body-appointments-buttons__button">
+              <button
+                className="table-body-appointments-buttons__button"
+                onClick={() => {
+                  selectDelete(true, appointment);
+                }}
+              >
                 <img src={deleteButton} alt="" />
               </button>
-              <button className="table-body-appointments-buttons__button">
+              <button className="table-body-appointments-buttons__button" onClick={() => {
+                selectEdit(true, appointment);
+              }}>
                 <img src={editButton} alt="" />
               </button>
             </td>

@@ -4,6 +4,8 @@ import { API_URL } from "src/constants";
 import {
   addAppointmentService,
   getAllAppointmentsService,
+  deleteAppointmentService,
+  editAppointmentService
 } from "src/services/AppointmentService";
 
 export default class Store {
@@ -101,6 +103,24 @@ export default class Store {
   addAppointment = async (form) => {
     try {
       const response = await addAppointmentService(form);
+      return response;
+    } catch (error) {
+      return error.response?.data?.message;
+    }
+  };
+
+  deleteAppointment = async (_id) => {
+    try {
+      const response = await deleteAppointmentService(_id);
+      return response;
+    } catch (error) {
+      return error.response?.data?.message;
+    }
+  };
+
+  editAppointment = async (_id, form) => {
+    try {
+      const response = await editAppointmentService(_id, form);
       return response;
     } catch (error) {
       return error.response?.data?.message;

@@ -10,3 +10,13 @@ export const addAppointmentService = (form) => {
 export const getAllAppointmentsService = () => {
   return $api.get(`${API_URL}/appointments`);
 };
+
+export const deleteAppointmentService = (_id) => {
+  return $api.delete(`${API_URL}/appointments/${_id}`);
+};
+
+export const editAppointmentService = (_id, form) => {
+  return $api.patch(`${API_URL}/appointments/${_id}`, {
+    ...form,
+  });
+};

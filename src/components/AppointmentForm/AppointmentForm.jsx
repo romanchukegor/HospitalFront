@@ -2,7 +2,7 @@ import { useState } from "react";
 import { doctors } from "src/constants";
 import "./style.scss";
 
-const AppointmentForm = ({ createAppointment, isError }) => {
+const AppointmentForm = ({ createAppointment, isError, setGetDatasFromForm }) => {
   const [form, setForm] = useState({
     name: "",
     doctor: doctors[0].value,
@@ -55,7 +55,6 @@ const AppointmentForm = ({ createAppointment, isError }) => {
             handleChange(event.target.name, event.target.value)
           }
           name="doctor"
-          placeholder="выбери"
         >
           {doctors.map((doctor) => (
             <option
