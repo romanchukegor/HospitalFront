@@ -33,10 +33,9 @@ $api.interceptors.response.use(
 
         return $api.request(originalRequest);
       } catch (error) {
-        return config;
+        throw error;
       }
     }
-    throw error;
   }
 );
 
