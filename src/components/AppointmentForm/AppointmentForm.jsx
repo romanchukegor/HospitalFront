@@ -2,7 +2,7 @@ import { useState } from "react";
 import { doctors } from "src/constants";
 import "./style.scss";
 
-const AppointmentForm = ({ createAppointment, isError, setGetDatasFromForm }) => {
+const AppointmentForm = ({ createAppointment, isError }) => {
   const [appointmentForm, setAppointmentForm] = useState({
     name: "",
     doctor: doctors[0].value,
