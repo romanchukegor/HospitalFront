@@ -1,4 +1,4 @@
-import Modal from "../Modal/Modal";
+import Modal from "src/components/Modal/Modal";
 
 const DeleteModal = ({
   setIsActiveDeleteModal,

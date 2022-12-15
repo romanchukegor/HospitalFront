@@ -4,10 +4,10 @@ import Header from "src/components/Header/Header";
 import Error from "src/components/Error/Error";
 import AppointmentForm from "src/components/AppointmentForm/AppointmentForm";
 import AppointmentTable from "src/components/AppointmentTable/AppointmentTable";
+import DeleteModal from "src/components/DeleteModal/DeleteModal";
+import EditModal from "src/components/EditModal/EditModal";
 import { checkInputByEmptiness } from "src/helpers/validator";
 import "./style.scss";
-import DeleteModal from "../DeleteModal/DeleteModal";
-import EditModal from "../EditModal/EditModal";
 
 const Home = () => {
   const store = useContext(Context);
@@ -23,11 +23,10 @@ const Home = () => {
   }, []);
 
   const logOutUser = async () => {
-    const error = await store.userLogout();
+    const result = await store.logOutUser();
 
-    if (error) {
-      setIsError(true);
-      setErrorMessage(error);
+    if (!result.data) {
+      handleError("Ошибка выхода");
       return;
     }
   };
@@ -57,7 +56,7 @@ const Home = () => {
 
     const result = await store.addAppointment(appointmentForm);
 
-    if (!result) {
+    if (!result.data) {
       handleError("Ошибка добавления приема");
       return;
     }
@@ -70,7 +69,7 @@ const Home = () => {
   const getAllAppointments = async () => {
     const result = await store.getAllAppointments();
 
-    if (!result) {
+    if (!result.data) {
       handleError("Ошибка получения приемов");
       return;
     }
@@ -81,7 +80,7 @@ const Home = () => {
   const deleteAppointment = async (_id) => {
     const result = await store.deleteAppointment(_id);
 
-    if (!result) {
+    if (!result.data) {
       handleError("Ошибка получения приемов");
       return;
     }
@@ -91,10 +90,9 @@ const Home = () => {
   };
 
   const editAppointment = async (_id, editForm) => {
-
     const result = await store.editAppointment(_id, editForm);
 
-    if (!result) {
+    if (!result.data) {
       handleError("Ошибка обновления приема");
       return;
     }
