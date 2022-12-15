@@ -58,7 +58,8 @@ const LogInForm = () => {
         <img 
           src={bodyImage} 
           alt="" 
-          className="login-body__image" />
+          className="login-body__image" 
+        />
         <div className="login-body-form">
           <div className="login-body-form__title">Войти в систему</div>
           <div className="login-body-form-inputs">
