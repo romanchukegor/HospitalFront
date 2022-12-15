@@ -1,4 +1,4 @@
-import { API_URL } from "../constants";
+import { API_URL } from "src/constants";
 import $api from "src/http";
 
 export const addAppointmentService = (appointmentForm) => {

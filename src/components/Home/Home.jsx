@@ -18,11 +18,11 @@ const Home = () => {
   }, []);
 
   const logOutUser = async () => {
-    const error = await store.userLogout();
+    const result = await store.logOutUser();
 
-    if (error) {
+    if (!result.data) {
       setIsError(true);
-      setErrorMessage(error);
+      setErrorMessage("Ошибка выхода");
       return;
     }
   };
@@ -52,7 +52,7 @@ const Home = () => {
 
     const result = await store.addAppointment(appointmentForm);
 
-    if (!result) {
+    if (!result.data) {
       handleError("Ошибка добавления приема");
       return;
     }
@@ -65,7 +65,7 @@ const Home = () => {
   const getAllAppointments = async () => {
     const result = await store.getAllAppointments();
 
-    if (!result) {
+    if (!result.data) {
       handleError("Ошибка получения приемов");
       return;
     }

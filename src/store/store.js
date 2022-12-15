@@ -38,10 +38,12 @@ export default class Store {
     events.forEach((listener) => listener(data));
   };
 
-  userLogin = async (login, password) => {
+  logInUser = async (login, password) => {
     try {
       const response = await logIn(login, password);
+
       localStorage.setItem("token", response.data.accessToken);
+
       this.setAuth(true);
       this.setUser(response.data.user);
     } catch (error) {
@@ -49,10 +51,12 @@ export default class Store {
     }
   };
 
-  userRegistration = async (login, password) => {
+  registrationUser = async (login, password) => {
     try {
       const response = await registration(login, password);
+
       localStorage.setItem("token", response.data.accessToken);
+
       this.setAuth(true);
       this.setUser(response.data.user);
     } catch (error) {
@@ -60,10 +64,12 @@ export default class Store {
     }
   };
 
-  userLogout = async () => {
+  logOutUser = async () => {
     try {
       const response = await logout();
+
       localStorage.removeItem("token", response.data.accessToken);
+
       this.setAuth(false);
       this.setUser({});
     } catch (error) {
@@ -77,7 +83,9 @@ export default class Store {
         const response = await axios.get(`${API_URL}/refresh`, {
           withCredentials: true,
         });
+
         localStorage.setItem("token", response.data.accessToken);
+
         this.setAuth(true);
         this.setUser(response.data.user);
       } else {
@@ -92,6 +100,7 @@ export default class Store {
   getAllAppointments = async () => {
     try {
       const response = await getAllAppointmentsService();
+
       return response;
     } catch (error) {
       return error.response?.data?.message;
@@ -101,6 +110,7 @@ export default class Store {
   addAppointment = async (appointmentForm) => {
     try {
       const response = await addAppointmentService(appointmentForm);
+
       return response;
     } catch (error) {
       return error.response?.data?.message;
