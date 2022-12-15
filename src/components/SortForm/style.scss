@@ -1,0 +1,12 @@
+.sort-field {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 60px 185px 60px 0;
+
+  &__select {
+    width: 200px;
+    height: 47px;
+    margin: 20px;
+  }
+}

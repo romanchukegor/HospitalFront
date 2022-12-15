@@ -4,7 +4,9 @@ import Header from "src/components/Header/Header";
 import Error from "src/components/Error/Error";
 import AppointmentForm from "src/components/AppointmentForm/AppointmentForm";
 import AppointmentTable from "src/components/AppointmentTable/AppointmentTable";
-import { checkInputByEmptiness } from "src/helpers/validator";
+import SortForm from "../SortForm/SortForm";
+import { checkInputByEmptiness, sortDirect } from "src/helpers/validator";
+import { sortHelper } from "src/helpers/sortHelper";
 import "./style.scss";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import EditModal from "../EditModal/EditModal";
@@ -17,10 +19,19 @@ const Home = () => {
   const [isActiveDeleteModal, setIsActiveDeleteModal] = useState(false);
   const [isActiveEditModal, setIsActiveEditModal] = useState(false);
   const [currentAppointment, setCurrentAppointment] = useState(null);
+  const [sortedAppointments, setSortedAppointments] = useState(null);
 
   useEffect(() => {
     getAllAppointments();
   }, []);
+
+  useEffect(() => {
+    if (sortedAppointments) {
+      sortHelper(sortedAppointments, appointments, setAppointments);
+    } else {
+      getAllAppointments();
+    }
+  }, [sortedAppointments]);
 
   const logOutUser = async () => {
     const error = await store.userLogout();
@@ -91,7 +102,6 @@ const Home = () => {
   };
 
   const editAppointment = async (_id, editForm) => {
-
     const result = await store.editAppointment(_id, editForm);
 
     if (!result) {
@@ -114,19 +124,37 @@ const Home = () => {
     setAppointments(updatedAppointments);
   };
 
+  const sortAppointmentsByName = (value) => {
+    if (value === "") {
+      setSortedAppointments(null);
+    }
+
+    if (!sortedAppointments) {
+      setSortedAppointments({ sortBy: value, direction: "byAscending" });
+    }
+    
+    if (sortedAppointments) {
+      setSortedAppointments({ ...sortedAppointments, sortBy: value });
+    }
+  };
+
+  const sortAppointmentsByDirection = (value) => {
+    setSortedAppointments({ ...sortedAppointments, direction: value });
+  };
+
   const handleError = (text) => {
     setIsError(true);
     setErrorMessage(text);
   };
 
-  const selectDelete = (bool, apppintment) => {
+  const selectDelete = (bool, appointment) => {
     setIsActiveDeleteModal(bool);
-    setCurrentAppointment(apppintment);
+    setCurrentAppointment(appointment);
   };
 
-  const selectEdit = (bool, apppintment) => {
+  const selectEdit = (bool, appointment) => {
     setIsActiveEditModal(bool);
-    setCurrentAppointment(apppintment);
+    setCurrentAppointment(appointment);
   };
 
   return (
@@ -139,6 +167,10 @@ const Home = () => {
       <AppointmentForm
         createAppointment={createAppointment}
         isError={isError}
+      />
+      <SortForm
+        sortAppointmentsByName={sortAppointmentsByName}
+        sortAppointmentsByDirection={sortAppointmentsByDirection}
       />
       <AppointmentTable
         appointments={appointments}
