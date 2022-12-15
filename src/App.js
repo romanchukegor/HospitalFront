@@ -1,11 +1,35 @@
-import './App.css';
+import { useContext, useEffect, useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { Context } from ".";
+import LogInForm from "src/components/LogInForm/LogInForm";
+import Home from "src/components/Home/Home";
+import RegistrationForm from "src/components/RegistrationForm/RegistrationForm";
 
-function App() {
+const App = () => {
+  const store = useContext(Context);
+  const [isLogIn, setIsLogIn] = useState(store.isAuth);
+
+  useEffect(() => {
+    store.subscribe(isAuth => setIsLogIn(isAuth));
+    store.checkAuth();
+  }, []);
+
+  if (isLogIn) {
+    return (
+      <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="*" element={<Navigate to="/home" />} />
+      </Routes>
+    );
+  }
+
   return (
-    <div className="App">
-      
-    </div>
+    <Routes>
+      <Route path="/registration" element={<RegistrationForm />} />
+      <Route path="/authorization" element={<LogInForm />} />
+      <Route path="*" element={<Navigate to="/authorization" />} />
+    </Routes>
   );
-}
+};
 
 export default App;

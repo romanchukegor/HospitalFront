@@ -1,0 +1,36 @@
+.header {
+  display: flex;
+  align-items: center;
+  height: 110px;
+  background-color: #c5e9ff;
+  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
+  
+  &__title {
+    margin-left: 50px;
+    font-size: 36px;
+    font-weight: 300;
+  }
+  
+  &-box {
+    display: flex;
+    font-size: 24px;
+    margin-left: 50px;
+
+    &__title {
+      margin-left: 35px;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .header__title {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 650px) {
+  .header__title {
+    font-size: 20px;
+  }
+}
+
