@@ -5,11 +5,13 @@ import Error from "src/components/Error/Error";
 import AppointmentForm from "src/components/AppointmentForm/AppointmentForm";
 import AppointmentTable from "src/components/AppointmentTable/AppointmentTable";
 import SortForm from "../SortForm/SortForm";
-import { checkInputByEmptiness, sortDirect } from "src/helpers/validator";
+import { checkInputByEmptiness } from "src/helpers/validator";
 import { sortHelper } from "src/helpers/sortHelper";
+import { filterHelper } from "src/helpers/filterHelper";
 import "./style.scss";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import EditModal from "../EditModal/EditModal";
+import FilterForm from "../FilterForm/FilterForm";
 
 const Home = () => {
   const store = useContext(Context);
@@ -18,6 +20,7 @@ const Home = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isActiveDeleteModal, setIsActiveDeleteModal] = useState(false);
   const [isActiveEditModal, setIsActiveEditModal] = useState(false);
+  const [isActiveFilterForm, setIsActiveFilterForm] = useState(false);
   const [currentAppointment, setCurrentAppointment] = useState(null);
   const [sortedAppointments, setSortedAppointments] = useState(null);
 
@@ -132,7 +135,7 @@ const Home = () => {
     if (!sortedAppointments) {
       setSortedAppointments({ sortBy: value, direction: "byAscending" });
     }
-    
+
     if (sortedAppointments) {
       setSortedAppointments({ ...sortedAppointments, sortBy: value });
     }
@@ -140,6 +143,12 @@ const Home = () => {
 
   const sortAppointmentsByDirection = (value) => {
     setSortedAppointments({ ...sortedAppointments, direction: value });
+  };
+
+  const filterByDate = (rangeDate) => {
+    console.log("s", rangeDate);
+    const { start, end } = rangeDate;
+    filterHelper(appointments, start, end, setAppointments);
   };
 
   const handleError = (text) => {
@@ -171,7 +180,9 @@ const Home = () => {
       <SortForm
         sortAppointmentsByName={sortAppointmentsByName}
         sortAppointmentsByDirection={sortAppointmentsByDirection}
+        setIsActiveFilterForm={setIsActiveFilterForm}
       />
+      {isActiveFilterForm && <FilterForm filterByDate={filterByDate} getAllAppointments={getAllAppointments}/>}
       <AppointmentTable
         appointments={appointments}
         selectDelete={selectDelete}
