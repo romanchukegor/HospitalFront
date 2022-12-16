@@ -1,10 +1,20 @@
 import { useState } from "react";
 import { sortSelectValues, sortDirectionValues } from "src/constants";
+import addFilterForm from "src/images/addFilterForm.svg";
 import "./style.scss";
 
-const SortForm = ({ sortAppointmentsByName, sortAppointmentsByDirection }) => {
+const SortForm = ({
+  sortAppointmentsByName,
+  sortAppointmentsByDirection,
+  setIsActiveFilterForm,
+}) => {
   const [openDirectionFireld, setOpenDirectionField] = useState(false);
+  const [closeFilterButton, setCloseFilterButton] = useState(false);
 
+  const openFilterForm = () => {
+    setIsActiveFilterForm(true);
+    setCloseFilterButton(true);
+  };
   return (
     <div className="sort-field">
       <label htmlFor="sortValue" className="sort-field__label">
@@ -52,6 +62,21 @@ const SortForm = ({ sortAppointmentsByName, sortAppointmentsByDirection }) => {
             );
           })}
         </select>
+      )}
+      {!closeFilterButton && (
+        <div className="filter-box">
+          <label htmlFor="img" className="filter-box__label">
+            Добавить фильтр по дате:
+          </label>
+          <button className="filter-box-button" onClick={openFilterForm}>
+            <img
+              src={addFilterForm}
+              alt=""
+              id="img"
+              className="filter-box-button__img"
+            />
+          </button>
+        </div>
       )}
     </div>
   );
