@@ -69,8 +69,11 @@ const EditModal = ({
         titleForButtonChange={titleForEditButtonChange}
         editForm={editForm}
       >
+        <div className="edit-form-box">
+        <label htmlFor="name">Имя:</label>
         <input
           type="text"
+          id="name"
           value={editForm.name}
           name="name"
           className={
@@ -82,6 +85,9 @@ const EditModal = ({
             handleChange(event.target.name, event.target.value)
           }
         />
+        </div>
+        <div className="edit-form-box">
+        <label htmlFor="doctor">Врач:</label>
         <select
           className={
             !isError
@@ -95,6 +101,7 @@ const EditModal = ({
           }
           name="doctor"
         >
+          
           {doctors.map((doctor) => (
             <option
               key={doctor.name}
@@ -105,9 +112,14 @@ const EditModal = ({
               {doctor.name}
             </option>
           ))}
+          
         </select>
+        </div>
+        <div className="edit-form-box">
+        <label htmlFor="date">Дата:</label>
         <input
           type="date"
+          id="date"
           value={editForm.date}
           name="date"
           className={
@@ -119,8 +131,12 @@ const EditModal = ({
             handleChange(event.target.name, event.target.value)
           }
         />
+        </div>
+        <div className="edit-form-box">
+        <label htmlFor="compalint">Жалобы:</label>
         <input
           type="text"
+          id="complaint"
           value={editForm.complaint}
           name="complaint"
           className={
@@ -132,6 +148,7 @@ const EditModal = ({
             handleChange(event.target.name, event.target.value)
           }
         />
+        </div>
       </Modal>
       {isError && (
         <Error
