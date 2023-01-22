@@ -1,0 +1,24 @@
+.sort-field {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 60px 0 60px 0;
+
+  &__select {
+    width: 200px;
+    height: 47px;
+    margin: 20px;
+  }
+}
+
+.filter-box {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin-right: 205px;
+
+  &-button {
+    border: 0;
+    background-color: rgba(197, 233, 255, 0.72);
+  }
+}

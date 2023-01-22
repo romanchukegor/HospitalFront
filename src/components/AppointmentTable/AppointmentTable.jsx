@@ -18,7 +18,7 @@ const AppointmentTable = ({ appointments, selectDelete, selectEdit }) => {
         </tr>
       </thead>
       {appointments.map((appointment) => (
-        <tbody className="table-body">
+        <tbody className="table-body" key={appointment._id}>
           <tr className="table-body-appointments">
             <td className="table-body-appointments__column">
               {appointment.name}

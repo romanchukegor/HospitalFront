@@ -1,0 +1,28 @@
+.filter-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__button {
+    width: 208px;
+    height: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    background-color: white;
+  }
+
+  &__delete-button {
+    width: 50px;
+    height: 50px;
+    border: 0;
+    background-color: rgba(197, 233, 255, 0);
+  }
+
+  &__input {
+    width: 238px;
+    height: 40px;
+    margin: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+}

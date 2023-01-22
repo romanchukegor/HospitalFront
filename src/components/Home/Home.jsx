@@ -4,9 +4,12 @@ import Header from "src/components/Header/Header";
 import Error from "src/components/Error/Error";
 import AppointmentForm from "src/components/AppointmentForm/AppointmentForm";
 import AppointmentTable from "src/components/AppointmentTable/AppointmentTable";
+import SortForm from "../SortForm/SortForm";
 import DeleteModal from "src/components/DeleteModal/DeleteModal";
 import EditModal from "src/components/EditModal/EditModal";
 import { checkInputByEmptiness } from "src/helpers/validator";
+import { sortHelper } from "src/helpers/sortHelper";
+import { filterHelper } from "src/helpers/filterHelper";
 import "./style.scss";
 
 const Home = () => {
@@ -16,11 +19,21 @@ const Home = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isActiveDeleteModal, setIsActiveDeleteModal] = useState(false);
   const [isActiveEditModal, setIsActiveEditModal] = useState(false);
+  const [isActiveFilterForm, setIsActiveFilterForm] = useState(false);
   const [currentAppointment, setCurrentAppointment] = useState(null);
+  const [sortedAppointments, setSortedAppointments] = useState(null);
 
   useEffect(() => {
     getAllAppointments();
   }, []);
+
+  useEffect(() => {
+    if (sortedAppointments) {
+      sortHelper(sortedAppointments, appointments, setAppointments);
+    } else {
+      getAllAppointments();
+    }
+  }, [sortedAppointments]);
 
   const logOutUser = async () => {
     const result = await store.logOutUser();
@@ -112,19 +125,43 @@ const Home = () => {
     setAppointments(updatedAppointments);
   };
 
+  const sortAppointmentsByName = (value) => {
+    if (value === "") {
+      setSortedAppointments(null);
+    }
+
+    if (!sortedAppointments) {
+      setSortedAppointments({ sortBy: value, direction: "byAscending" });
+    }
+
+    if (sortedAppointments) {
+      setSortedAppointments({ ...sortedAppointments, sortBy: value });
+    }
+  };
+
+  const sortAppointmentsByDirection = (value) => {
+    setSortedAppointments({ ...sortedAppointments, direction: value });
+  };
+
+  const filterByDate = (rangeDate) => {
+    console.log("s", rangeDate);
+    const { start, end } = rangeDate;
+    filterHelper(appointments, start, end, setAppointments);
+  };
+
   const handleError = (text) => {
     setIsError(true);
     setErrorMessage(text);
   };
 
-  const selectDelete = (bool, apppintment) => {
+  const selectDelete = (bool, appointment) => {
     setIsActiveDeleteModal(bool);
-    setCurrentAppointment(apppintment);
+    setCurrentAppointment(appointment);
   };
 
-  const selectEdit = (bool, apppintment) => {
+  const selectEdit = (bool, appointment) => {
     setIsActiveEditModal(bool);
-    setCurrentAppointment(apppintment);
+    setCurrentAppointment(appointment);
   };
 
   return (
@@ -138,6 +175,12 @@ const Home = () => {
         createAppointment={createAppointment}
         isError={isError}
       />
+      <SortForm
+        sortAppointmentsByName={sortAppointmentsByName}
+        sortAppointmentsByDirection={sortAppointmentsByDirection}
+        setIsActiveFilterForm={setIsActiveFilterForm}
+      />
+      {isActiveFilterForm && <FilterForm filterByDate={filterByDate} getAllAppointments={getAllAppointments}/>}
       <AppointmentTable
         appointments={appointments}
         selectDelete={selectDelete}
