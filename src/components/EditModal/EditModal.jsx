@@ -1,8 +1,9 @@
 import { useState } from "react";
-import Error from "../Error/Error";
+import Modal from "src/components/Modal/Modal";
+import Error from "src/components/Error/Error";
 import { doctors } from "src/constants";
 import { changeFormatDate, checkInputByEmptiness } from "src/helpers/validator";
-import Modal from "../Modal/Modal";
+
 
 const EditModal = ({
   editAppointment,

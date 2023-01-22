@@ -8,6 +8,7 @@ const Error = ({ errorMessage, isError, setIsError }) => {
 
     setIsError(false);
   };
+  
   return (
     <Snackbar
       open={isError}

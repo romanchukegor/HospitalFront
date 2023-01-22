@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "src";
 import Error from "src/components/Error/Error";
 import Header from "src/components/Header/Header";
-import { Context } from "src";
 import { regexForPassword } from "src/constants";
 import { checkStringByRegex, checkStringLength } from "src/helpers/validator";
 import build from "src/images/build.svg";
@@ -41,7 +41,7 @@ const LogInForm = () => {
       return;
     }
 
-    const error = await store.userLogin(user.login, user.password);
+    const error = await store.LogInUser(user.login, user.password);
 
     if (error) {
       handleError(error);
